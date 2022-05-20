@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31424.327
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyItems_Update", "MyItems_Update\MyItems_Update.csproj", "{E653F396-2006-4128-A44D-7263C057259E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E653F396-2006-4128-A44D-7263C057259E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E653F396-2006-4128-A44D-7263C057259E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E653F396-2006-4128-A44D-7263C057259E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E653F396-2006-4128-A44D-7263C057259E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {EC918BCF-F6B9-4C19-996F-D6045F4C58E6}
+	EndGlobalSection
+EndGlobal

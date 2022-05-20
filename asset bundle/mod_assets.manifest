@@ -1,0 +1,56 @@
+ManifestFileVersion: 0
+CRC: 161902356
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 7e3f609302c5eab2e118b18bf1f9d45c
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 54a56110adecc0004f5c055c7634dc52
+HashAppended: 0
+ClassTypes:
+- Class: 1
+  Script: {instanceID: 0}
+- Class: 4
+  Script: {instanceID: 0}
+- Class: 21
+  Script: {instanceID: 0}
+- Class: 23
+  Script: {instanceID: 0}
+- Class: 33
+  Script: {instanceID: 0}
+- Class: 43
+  Script: {instanceID: 0}
+- Class: 48
+  Script: {instanceID: 0}
+- Class: 49
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/ItemTests/Textures/Icons/Item/HERE_FOR_EXPORT_DO_NOT_USE.txt
+- Assets/ItemTests/Textures/Icons/Artifacts/CREATE A FOLDER FOR EACH ARTIFACT/HERE_FOR_EXPORT_DO_NOT_USE.txt
+- Assets/ItemTests/Models/Meshes/item1/item1.fbx
+- Assets/ItemTests/Textures/Icons/Survivors/HERE_FOR_EXPORT_DO_NOT_USE.txt
+- Assets/ItemTests/Models/Prefabs/Item/item2/Item_2.prefab
+- Assets/ItemTests/Textures/Materials/Survivors/CREATE A FOLDER FOR EACH SURVIVOR/HERE_FOR_EXPORT_DO_NOT_USE.txt
+- Assets/ItemTests/Models/Prefabs/Equipment/CREATE A NEW FOLDER FOR EACH EQUIPMENT
+  - DO NOT USE THIS FOLDER/HERE_FOR_EXPORT_DO_NOT_USE.txt
+- Assets/ItemTests/Textures/Materials/Monsters/CREATE A FOLDER FOR EACH MONSTER/HERE_FOR_EXPORT_DO_NOT_USE.txt
+- Assets/ItemTests/Models/Prefabs/Monster/CREATE A NEW FOLDER FOR EACH MONSTER/HERE_FOR_EXPORT_DO_NOT_USE.txt
+- Assets/ItemTests/Textures/Icons/Skills/HERE_FOR_EXPORT_DO_NOT_USE.txt
+- Assets/ItemTests/Textures/Icons/Buff/HERE_FOR_EXPORT_DO_NOT_USE.txt
+- Assets/ItemTests/Models/Prefabs/Item/item1/Item_1.prefab
+- Assets/ItemTests/Textures/Materials/Item/item1/Item1_Mat.mat
+- Assets/ItemTests/Models/Prefabs/Item/CREATE A NEW FOLDER FOR EACH ITEM - DO NOT
+  USE THIS FOLDER/HERE_FOR_EXPORT_DO_NOT_USE.txt
+- Assets/ItemTests/Models/Prefabs/Survivors/CREATE A NEW FOLDER FOR EACH SURVIVOR/HERE_FOR_EXPORT_DO_NOT_USE.txt
+- Assets/ItemTests/Textures/Materials/Equipment/CREATE A NEW FOLDER FOR EACH EQUIPMENT
+  - DO NOT USE THIS FOLDER/HERE_FOR_EXPORT_DO_NOT_USE.txt
+- Assets/ItemTests/Models/Meshes/item2/item2.fbx
+- Assets/ItemTests/Models/Meshes/HERE_FOR_EXPORT_DO_NOT_USE.txt
+- Assets/ItemTests/Textures/Materials/Item/CREATE A NEW FOLDER FOR EACH ITEM - DO
+  NOT USE THIS FOLDER/HERE_FOR_EXPORT_DO_NOT_USE.txt
+- Assets/ItemTests/Shaders/HERE_FOR_EXPORT_DO_NOT_USE.txt
+- Assets/ItemTests/Textures/Materials/Item/item2/New Material.mat
+- Assets/ItemTests/Textures/Icons/Equipment/HERE_FOR_EXPORT_DO_NOT_USE.txt
+Dependencies: []
