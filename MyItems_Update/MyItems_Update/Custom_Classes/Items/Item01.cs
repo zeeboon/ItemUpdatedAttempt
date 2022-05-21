@@ -14,7 +14,7 @@ namespace MyItems_Update.Custom_Classes.Items
     class Item01 : ItemBase
     {
         public override string ItemName => "reset item";
-
+        
         public override string ItemLangTokenName => "COOLDOWNRESET";
 
         public override string ItemPickupDesc => "Reset cooldowns at the cost of health";

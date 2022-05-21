@@ -9,7 +9,6 @@ using System.Text;
 using UnityEngine;
 using static MyItems_Update.Utils.ItemHelper;
 using static MyItems_Update.Utils.Log;
-using TILER2;
 using UnityEngine.AddressableAssets;
 
 namespace MyItems_Update.Custom_Classes.Items
@@ -188,7 +187,7 @@ namespace MyItems_Update.Custom_Classes.Items
 
         public static void Update()
         {
-            if (Input.GetKeyDown(KeyCode.F7))
+            if (Input.GetKeyDown(KeyCode.F2))
             {
                 var transform = PlayerCharacterMasterController.instances[0].master.GetBodyObject().transform;
 

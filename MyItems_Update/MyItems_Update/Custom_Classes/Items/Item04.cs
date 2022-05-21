@@ -8,7 +8,6 @@ using System.Text;
 using UnityEngine;
 using static MyItems_Update.Utils.ItemHelper;
 using static MyItems_Update.Utils.Log;
-using TILER2;
 
 namespace MyItems_Update.Custom_Classes.Items
 {
@@ -91,10 +90,9 @@ namespace MyItems_Update.Custom_Classes.Items
             DeathItemBuff.buffColor = Color.red;
             DeathItemBuff.canStack = false;
             DeathItemBuff.isDebuff = false;
-            //DeathItemBuff.name = T2Module.modInfo.shortIdentifier + "SnakeEyes";
             DeathItemBuff.name = "DeathItemBuff";
             DeathItemBuff.iconSprite = Resources.Load<Sprite>("Textures/MiscIcons/texMysteryIcon");
-            //BuffAPI.Add(new CustomBuff(DeathItemBuff));
+            ContentAddition.AddBuffDef(DeathItemBuff);
         }
 
         public override void Init(ConfigFile config)

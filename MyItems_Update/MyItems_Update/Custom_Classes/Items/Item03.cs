@@ -18,7 +18,7 @@ namespace MyItems_Update.Custom_Classes.Items
         public override string ItemLangTokenName => "CHUNGUS";
 
         public override string ItemPickupDesc => "Killing an enemy heals you for a percentage of the damage done";
-
+         
         public override string ItemFullDescription => $"<style=cIsDamage>Killing an enemy</style> heals you for <style=cIsHealing>{HealPercentage}%</style>" +
                                                         $" <style=cStack>[+{HealStackPercentage}% per stack]</style> of the health they had left.";
 

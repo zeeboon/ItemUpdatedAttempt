@@ -113,9 +113,8 @@ namespace MyItems_Update.Base_Classes
             itemDef.hidden = Hidden;
             itemDef.tags = ItemTags;
             itemDef.canRemove = CanRemove;
-            itemDef.tier = Tier;
-            //itemDef.deprecatedTier = Tier;
-            //itemDef.deprecatedTier = ItemTier.Tier2;
+            
+            itemDef.deprecatedTier = Tier;
             /*
 #pragma warning disable Publicizer001 // Accessing a member that was not originally public. Here we ignore this warning because with how this example is setup we are forced to do this
             itemDef._itemTierDef = Addressables.LoadAssetAsync<ItemTierDef>("RoR2/Base/Common/Tier2Def.asset").WaitForCompletion();

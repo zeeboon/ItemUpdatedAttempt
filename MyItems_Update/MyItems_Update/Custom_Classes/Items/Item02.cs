@@ -15,15 +15,15 @@ namespace MyItems_Update.Custom_Classes.Items
     {
         public override string ItemName => "Liquid Nitrogen";
 
-        public override string ItemLangTokenName => "TEST";
+        public override string ItemLangTokenName => "LIQUID_NITROGEN";
 
-        public override string ItemPickupDesc => "Killing an enemy slows surrounding enemies. They have a chance to freeze instead";
+        public override string ItemPickupDesc => "Killing an enemy slows surrounding enemies, with a chance to cause a freezing blast instead";
 
         public override string ItemFullDescription => $"<style=cIsDamage>Killing an enemy</style> causes surrounding enemies to be <style=cIsUtility>slowed</style> by 50% for {SlowDuration} seconds <style=cStack>[+ {SlowDuration / 2} / stack.]</style>" +
                                                         $"\nIn addition enemies have a {BlastChance}% chance <style=cStack>[+ {BlastChance / 2}% / stack]</style> of <style=cIsDamage>exploding in ice</style>, dealing <style=cIsDamage>{BlastDamageMult * 100}% damage</style> <style=cStack>[+ {BlastDamageStack * 100} / stack]</style> <style=cIsUtility>freezing</style> surrounding enemies." +
                                                         "\n<style=cSub>Enemies killed by the blast always explode.</style>";
 
-        public override string ItemLore => "brr cold";
+        public override string ItemLore => "here's frost in your eye";
 
         public override ItemTier Tier => ItemTier.Tier2;
 
@@ -37,7 +37,7 @@ namespace MyItems_Update.Custom_Classes.Items
         public GameObject ExplosionPrefab;
 
         public static float SlowDuration = 3f;
-        public static float SlowRadius = 14f;
+        public static float SlowRadius = 70f; //14f
         public static float BlastRadius = 10f;
         public static float BlastDamageMult = 2.5f;
         public static float BlastDamageStack = 0.5f;
@@ -126,23 +126,8 @@ namespace MyItems_Update.Custom_Classes.Items
 
         private void SlowOnDeath(CharacterBody victimBody, CharacterBody attackerBody, int itemCount, DamageReport report)
         {
-            float radius = victimBody.radius + SlowRadius;
-            //float num3 = 2f;
-            //float baseDamage = attackerBody.damage * num3;
-            Vector3 corePosition = victimBody.corePosition;
-            SphereSearch sphereSearch = new SphereSearch();
-
-
-            sphereSearch.origin = corePosition;
-            sphereSearch.mask = LayerIndex.entityPrecise.mask;
-            sphereSearch.radius = radius;
-            sphereSearch.RefreshCandidates();
-            sphereSearch.FilterCandidatesByHurtBoxTeam(TeamMask.GetUnprotectedTeams(attackerBody.teamComponent.teamIndex));
-            sphereSearch.FilterCandidatesByDistinctHurtBoxEntities();
-            sphereSearch.OrderCandidatesByDistance();
-            sphereSearch.GetHurtBoxes();
-            sphereSearch.ClearCandidates();
-
+            
+            
             /*
             GlobalEventManager.igniteOnKillSphereSearch.origin = corePosition;
             GlobalEventManager.igniteOnKillSphereSearch.mask = LayerIndex.entityPrecise.mask;
@@ -153,18 +138,17 @@ namespace MyItems_Update.Custom_Classes.Items
             GlobalEventManager.igniteOnKillSphereSearch.OrderCandidatesByDistance();
             GlobalEventManager.igniteOnKillSphereSearch.GetHurtBoxes(GlobalEventManager.igniteOnKillHurtBoxBuffer);
             GlobalEventManager.igniteOnKillSphereSearch.ClearCandidates();
-            */
 
-            for (int i = 0; i < sphereSearch.GetHurtBoxes().Length; i++)
+            for (int i = 0; i < GlobalEventManager.igniteOnKillHurtBoxBuffer.Count; i++)
             {
-                HurtBox hurtBox = sphereSearch.GetHurtBoxes()[i];
+                HurtBox hurtBox = GlobalEventManager.igniteOnKillHurtBoxBuffer[i];
                 if (hurtBox.healthComponent)
                 {
-                    //DotController.InflictDot(hurtBox.healthComponent.gameObject, attackerBody.gameObject, DotController.DotIndex., 1.5f + 1.5f * (float)itemCount, 1f);
                     hurtBox.healthComponent.body.AddTimedBuff(RoR2Content.Buffs.Slow50, (SlowDuration / 2)  + (SlowDuration / 2) * (float)itemCount);
                 }
             }
-            //GlobalEventManager.igniteOnKillHurtBoxBuffer.Clear();
+            
+            GlobalEventManager.igniteOnKillHurtBoxBuffer.Clear();
             /*new BlastAttack
             {
                 radius = num2,
@@ -178,6 +162,8 @@ namespace MyItems_Update.Custom_Classes.Items
                 teamIndex = attackerBody.teamComponent.teamIndex,
                 position = corePosition
             }.Fire();*/
+
+            /*
             EffectManager.SpawnEffect(EntityStates.Bandit2.StealthMode.smokeBombEffectPrefab, new EffectData
             {
                 origin = corePosition,
@@ -190,6 +176,47 @@ namespace MyItems_Update.Custom_Classes.Items
                 scale = radius,
                 rotation = Util.QuaternionSafeLookRotation(report.damageInfo.force)
             }, true);
+            */
+            
+            float radius = victimBody.radius + SlowRadius;
+            Vector3 corePosition = victimBody.corePosition;
+            SphereSearch sphereSearch = new SphereSearch();
+            List<HurtBox> targets = new List<HurtBox>();
+
+            sphereSearch.origin = corePosition;
+            sphereSearch.mask = LayerIndex.entityPrecise.mask;
+            sphereSearch.radius = radius;
+            sphereSearch.RefreshCandidates();
+            sphereSearch.FilterCandidatesByHurtBoxTeam(TeamMask.GetUnprotectedTeams(attackerBody.teamComponent.teamIndex));
+            sphereSearch.FilterCandidatesByDistinctHurtBoxEntities();
+            sphereSearch.OrderCandidatesByDistance();
+            sphereSearch.GetHurtBoxes(targets);
+            sphereSearch.ClearCandidates();
+            
+
+            for (int i = 0; i < targets.Count; i++)
+            {
+                HurtBox hurtBox = targets[i];
+                if (hurtBox.healthComponent)
+                {
+                    hurtBox.healthComponent.body.AddTimedBuff(RoR2Content.Buffs.Slow50, (SlowDuration / 2) + (SlowDuration / 2) * (float)itemCount);
+                }
+            }
+
+            
+            EffectManager.SpawnEffect(EntityStates.Bandit2.StealthMode.smokeBombEffectPrefab, new EffectData
+            {
+                origin = corePosition,
+                scale = radius+20f,
+                rotation = Util.QuaternionSafeLookRotation(report.damageInfo.force)
+            }, true);
+            EffectManager.SpawnEffect(ExplosionPrefab, new EffectData
+            {
+                origin = corePosition,
+                scale = radius,
+                rotation = Util.QuaternionSafeLookRotation(report.damageInfo.force)
+            }, true);
+            
         }
 
         private void IceBlast(CharacterBody victimBody, CharacterBody attackerBody, int itemCount)
