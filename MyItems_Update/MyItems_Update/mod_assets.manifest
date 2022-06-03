@@ -1,0 +1,57 @@
+ManifestFileVersion: 0
+CRC: 2300883950
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 8da6fcc33f9ac525234c75cc96968653
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: cec2bcb972230ef17fc766ab06785426
+HashAppended: 0
+ClassTypes:
+- Class: 1
+  Script: {instanceID: 0}
+- Class: 4
+  Script: {instanceID: 0}
+- Class: 21
+  Script: {instanceID: 0}
+- Class: 23
+  Script: {instanceID: 0}
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 33
+  Script: {instanceID: 0}
+- Class: 43
+  Script: {instanceID: 0}
+- Class: 48
+  Script: {instanceID: 0}
+- Class: 49
+  Script: {instanceID: 0}
+- Class: 198
+  Script: {instanceID: 0}
+- Class: 199
+  Script: {instanceID: 0}
+- Class: 213
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/ItemTests/Textures/Icons/Items/HERE_FOR_EXPORT_DO_NOT_USE.txt
+- Assets/ItemTests/Models/Meshes/item1/item1.fbx
+- Assets/ItemTests/Models/Prefabs/Items/Item_2.prefab
+- Assets/ItemTests/Models/Prefabs/Equipment/CREATE A NEW FOLDER FOR EACH EQUIPMENT
+  - DO NOT USE THIS FOLDER/HERE_FOR_EXPORT_DO_NOT_USE.txt
+- Assets/ItemTests/Textures/Icons/Buff/HERE_FOR_EXPORT_DO_NOT_USE.txt
+- Assets/ItemTests/Models/Prefabs/Items/Item_1.prefab
+- Assets/ItemTests/Textures/Materials/VFX/poofMat.mat
+- Assets/ItemTests/Textures/Materials/Items/Item1_Mat.mat
+- Assets/ItemTests/Textures/Materials/VFX/trailMat.mat
+- Assets/ItemTests/Models/Prefabs/VFX/smoke_poof.prefab
+- Assets/ItemTests/Textures/Materials/VFX/trail.png
+- Assets/ItemTests/Textures/Materials/Equipment/CREATE A NEW FOLDER FOR EACH EQUIPMENT
+  - DO NOT USE THIS FOLDER/HERE_FOR_EXPORT_DO_NOT_USE.txt
+- Assets/ItemTests/Models/Meshes/item2/item2.fbx
+- Assets/ItemTests/Textures/Materials/VFX/circle.png
+- Assets/ItemTests/Shaders/HERE_FOR_EXPORT_DO_NOT_USE.txt
+- Assets/ItemTests/Textures/Materials/Items/New Material.mat
+- Assets/ItemTests/Textures/Icons/Equipment/HERE_FOR_EXPORT_DO_NOT_USE.txt
+Dependencies: []

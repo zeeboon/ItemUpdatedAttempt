@@ -19,15 +19,14 @@ namespace MyItems_Update.Custom_Classes.Items
 
         public override string ItemPickupDesc => "Killing an enemy slows surrounding enemies, with a chance to cause a freezing blast instead";
 
-        public override string ItemFullDescription => $"<style=cIsDamage>Killing an enemy</style> causes surrounding enemies to be <style=cIsUtility>slowed</style> by 50% for {SlowDuration} seconds <style=cStack>[+ {SlowDuration / 2} / stack.]</style>" +
-                                                        $"\nIn addition enemies have a {BlastChance}% chance <style=cStack>[+ {BlastChance / 2}% / stack]</style> of <style=cIsDamage>exploding in ice</style>, dealing <style=cIsDamage>{BlastDamageMult * 100}% damage</style> <style=cStack>[+ {BlastDamageStack * 100} / stack]</style> <style=cIsUtility>freezing</style> surrounding enemies." +
-                                                        "\n<style=cSub>Enemies killed by the blast always explode.</style>";
-
+        public override string ItemFullDescription => $"<style=cIsDamage>Killing an enemy</style> causes surrounding enemies to be <style=cIsUtility>slowed</style> by 50% for {SlowDuration} <style=cStack>[+ {SlowDuration / 2} per stack]</style> seconds" +
+                                                        $"\nIn addition, enemies have a {BlastChance}% <style=cStack>[+ {BlastChance / 2}% per stack]</style> chance of <style=cIsDamage>exploding in ice</style>, dealing <style=cIsDamage>{BlastDamageMult * 100}% </style> <style=cStack>[+ {BlastDamageStack * 100} / stack]</style> TOTAL damage and <style=cIsUtility>freezing</style> surrounding enemies.";
+        //                                                        +"\n<style=cSub>Enemies killed by the blast always explode.</style>"
         public override string ItemLore => "here's frost in your eye";
 
         public override ItemTier Tier => ItemTier.Tier2;
 
-        public override string ItemModelPath => "Assets/ItemTests/Models/prefabs/Item/item1/Item_1.prefab";
+        public override string ItemModelPath => "Assets/ItemTests/Models/Prefabs/Items/Item_1.prefab";
 
         public override string ItemIconPath => "";
 
@@ -37,7 +36,7 @@ namespace MyItems_Update.Custom_Classes.Items
         public GameObject ExplosionPrefab;
 
         public static float SlowDuration = 3f;
-        public static float SlowRadius = 70f; //14f
+        public static float SlowRadius = 14f; 
         public static float BlastRadius = 10f;
         public static float BlastDamageMult = 2.5f;
         public static float BlastDamageStack = 0.5f;
@@ -102,18 +101,19 @@ namespace MyItems_Update.Custom_Classes.Items
                 return;
 
 
-            //We need an inventory to heck for our item
+            //We need an inventory to check for our item
             if (report.attackerBody.inventory || report.damageInfo.damageType == DamageType.Freeze2s)
             {
                 CharacterBody victimBody = report.victimBody;
                 CharacterBody attackerBody = report.attackerBody;
+                float damage = report.damageDealt;
 
                 int itemCount = attackerBody.inventory.GetItemCount(iceDeathItem.itemIndex);
 
                 if (itemCount > 0 &&
                     Util.CheckRoll(BlastChance + (float)((itemCount-1) * BlastStackChance), attackerBody.master))
                 {
-                    IceBlast(victimBody, attackerBody, itemCount);
+                    IceBlast(victimBody, attackerBody, itemCount, damage);
                 }
                 else if (itemCount > 0)
                 {
@@ -219,15 +219,20 @@ namespace MyItems_Update.Custom_Classes.Items
             
         }
 
-        private void IceBlast(CharacterBody victimBody, CharacterBody attackerBody, int itemCount)
+        private void IceBlast(CharacterBody victimBody, CharacterBody attackerBody, int itemCount, float damage)
         {
             Vector3 corePosition = Util.GetCorePosition(victimBody.gameObject);
             GameObject gameObject2 = UnityEngine.Object.Instantiate<GameObject>(Resources.Load<GameObject>("Prefabs/NetworkedObjects/GenericDelayBlast"), corePosition, Quaternion.identity);
             float radius = BlastRadius + victimBody.radius;
             gameObject2.transform.localScale = new Vector3(radius, radius, radius);
+
+            float damageCoefficient = 2.5f * itemCount;
+            float newDamage = Util.OnHitProcDamage(damage, attackerBody.damage, damageCoefficient);
+
             DelayBlast component = gameObject2.GetComponent<DelayBlast>();
             component.position = corePosition;
-            component.baseDamage = attackerBody.damage * BlastDamageMult + (BlastDamageStack * (float)(itemCount -1 ));
+            //component.baseDamage = attackerBody.damage * BlastDamageMult + (BlastDamageStack * (float)(itemCount -1 ));
+            component.baseDamage = newDamage;
             component.baseForce = 2300f;
             component.attacker = attackerBody.gameObject;
             component.radius = radius;

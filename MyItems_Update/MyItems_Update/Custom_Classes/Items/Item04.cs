@@ -19,7 +19,7 @@ namespace MyItems_Update.Custom_Classes.Items
 
         public override string ItemPickupDesc => "Falling below half health increases movement speed, attack speed and chance to crit";
 
-        public override string ItemFullDescription => $"<style=cDeath>Being hit while below {HealthPercentage}% health</style> will <style=cIsUtility>increase your movement speed and" +
+        public override string ItemFullDescription => $"<style=cDeath>Taking damage below {HealthPercentage}% health</style> will <style=cIsUtility>increase your movement speed and" +
                                                         $"attack speed by {MoveSpeed * 100}%</style> and <style=cIsDamage> chance to crit by {CritChance}%</style> " +
                                                         $"<style=cStack>[+{CritStack}% per stack]</style> for {BuffDuration} seconds <style=cStack>[+{DurationStack} per stack.]</style>";
                                                         

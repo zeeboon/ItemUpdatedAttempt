@@ -29,7 +29,7 @@ namespace MyItems_Update
     [BepInPlugin(ModGUID, ModName, ModVersion)]
 
     //------------------This line adds R2API dependencies required. ONLY ADD THE ONES YOU NEED. If you need to know which ones you need, check the R2API documentation----------
-    [R2APISubmoduleDependency(/*nameof(ResourcesAPI),*/ nameof(LanguageAPI), nameof(UnlockableAPI), nameof(ItemAPI), /*nameof(BuffAPI),*/ nameof(RecalculateStatsAPI))]
+    [R2APISubmoduleDependency(/*nameof(ResourcesAPI),*/ nameof(LanguageAPI), nameof(UnlockableAPI), nameof(ItemAPI), nameof(DotAPI), nameof(RecalculateStatsAPI))]
 
     //main class where the most basic stuff happens. Basically only here to activate the mod.
     public class Main : BaseUnityPlugin
