@@ -59,11 +59,32 @@ namespace MyItems_Update.Base_Classes
             equipDef.descriptionToken = "EQUIPMENT_" + EquipmentLangTokenName + "_DESCRIPTION";
             equipDef.loreToken = "EQUIPMENT_" + EquipmentLangTokenName + "_LORE";
 
-            //equipDef.pickupModelPrefab = EquipmentModelPath;
-            //equipDef.pickupIconSprite = EquipmentIconPath;
 
-            equipDef.pickupIconSprite = Resources.Load<Sprite>("Textures/MiscIcons/texMysteryIcon");
-            equipDef.pickupModelPrefab = Resources.Load<GameObject>("Prefabs/PickupModels/PickupMystery");
+            //equipDef.pickupIconSprite = Resources.Load<Sprite>("Textures/MiscIcons/texMysteryIcon");
+            //equipDef.pickupModelPrefab = Resources.Load<GameObject>("Prefabs/PickupModels/PickupMystery");
+
+            //----------    
+            if (EquipmentModelPath == "")
+            {
+
+                equipDef.pickupModelPrefab = Resources.Load<GameObject>("Prefabs/PickupModels/PickupMystery");
+            }
+            else
+            {
+                equipDef.pickupModelPrefab = Main.Assets.LoadAsset<GameObject>(EquipmentModelPath);
+                //string prefab = "Assets/ItemTests/Models/prefabs/Item/item1/Item_1.prefab";
+
+            }
+            if (EquipmentIconPath == "")
+            {
+                equipDef.pickupIconSprite = Resources.Load<Sprite>("Textures/MiscIcons/texMysteryIcon");
+            }
+            else
+            {
+                equipDef.pickupIconSprite = Main.Assets.LoadAsset<Sprite>(EquipmentIconPath);
+            }
+
+            //---------- 
 
             equipDef.appearsInSinglePlayer = AppearsInSinglePlayer;
             equipDef.appearsInMultiPlayer = AppearsInMultiPlayer;

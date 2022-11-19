@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 2300883950
+CRC: 2608183556
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 8da6fcc33f9ac525234c75cc96968653
+    Hash: 8c6478cd801195f23e59201e5601151f
   TypeTreeHash:
     serializedVersion: 2
     Hash: cec2bcb972230ef17fc766ab06785426
@@ -36,22 +36,36 @@ ClassTypes:
 SerializeReferenceClassIdentifiers: []
 Assets:
 - Assets/ItemTests/Textures/Icons/Items/HERE_FOR_EXPORT_DO_NOT_USE.txt
-- Assets/ItemTests/Models/Meshes/item1/item1.fbx
-- Assets/ItemTests/Models/Prefabs/Items/Item_2.prefab
-- Assets/ItemTests/Models/Prefabs/Equipment/CREATE A NEW FOLDER FOR EACH EQUIPMENT
-  - DO NOT USE THIS FOLDER/HERE_FOR_EXPORT_DO_NOT_USE.txt
+- Assets/ItemTests/Textures/Materials/Equipment/M_gauntlet.mat
+- Assets/ItemTests/Models/Meshes/StinkyBombMesh.fbx
+- Assets/ItemTests/Models/Prefabs/Items/Nitrogen.prefab
+- Assets/ItemTests/Textures/Materials/Items/T_stinkybomb.png
+- Assets/ItemTests/Textures/Materials/Items/T_Nitrogen.png
+- Assets/ItemTests/Textures/Materials/Items/M_chungus.mat
+- Assets/ItemTests/Textures/Materials/Items/M_nitrogen.mat
+- Assets/ItemTests/Textures/Materials/Items/T_Doorhandle.png
+- Assets/ItemTests/Textures/Materials/Items/T_Chungus.png
+- Assets/ItemTests/Models/Meshes/NitrogenMesh.fbx
+- Assets/ItemTests/Textures/Materials/Items/T_Doorhandle_metal.png
 - Assets/ItemTests/Textures/Icons/Buff/HERE_FOR_EXPORT_DO_NOT_USE.txt
-- Assets/ItemTests/Models/Prefabs/Items/Item_1.prefab
+- Assets/ItemTests/Models/Meshes/StoneGauntletMesh.fbx
+- Assets/ItemTests/Models/Prefabs/Items/Doorhandle.prefab
 - Assets/ItemTests/Textures/Materials/VFX/poofMat.mat
-- Assets/ItemTests/Textures/Materials/Items/Item1_Mat.mat
+- Assets/ItemTests/Textures/Materials/Items/M_stinkybomb.mat
 - Assets/ItemTests/Textures/Materials/VFX/trailMat.mat
 - Assets/ItemTests/Models/Prefabs/VFX/smoke_poof.prefab
 - Assets/ItemTests/Textures/Materials/VFX/trail.png
-- Assets/ItemTests/Textures/Materials/Equipment/CREATE A NEW FOLDER FOR EACH EQUIPMENT
-  - DO NOT USE THIS FOLDER/HERE_FOR_EXPORT_DO_NOT_USE.txt
-- Assets/ItemTests/Models/Meshes/item2/item2.fbx
+- Assets/ItemTests/Models/Meshes/ChungusMesh.fbx
+- Assets/ItemTests/Textures/Materials/Equipment/T_Gauntlet.png
 - Assets/ItemTests/Textures/Materials/VFX/circle.png
+- Assets/ItemTests/Textures/Materials/Items/T_Chungus_metal.png
+- Assets/ItemTests/Models/Prefabs/Equipment/StoneGauntlet.prefab
+- Assets/ItemTests/Models/Prefabs/Items/Chungus.prefab
+- Assets/ItemTests/Models/Prefabs/Items/StinkyBomb.prefab
+- Assets/ItemTests/Textures/Materials/Items/T_stinkybomb_metal.png
+- Assets/ItemTests/Textures/Materials/Equipment/T_Gauntlet_emmis.png
+- Assets/ItemTests/Textures/Materials/Items/M_doorhandle.mat
+- Assets/ItemTests/Models/Meshes/DoorhandleMesh.fbx
 - Assets/ItemTests/Shaders/HERE_FOR_EXPORT_DO_NOT_USE.txt
-- Assets/ItemTests/Textures/Materials/Items/New Material.mat
 - Assets/ItemTests/Textures/Icons/Equipment/HERE_FOR_EXPORT_DO_NOT_USE.txt
 Dependencies: []

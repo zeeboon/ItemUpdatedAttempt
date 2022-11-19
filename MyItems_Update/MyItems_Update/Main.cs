@@ -46,7 +46,7 @@ namespace MyItems_Update
 
         //Creates an asset bundle that can be easily accessed from other classes
         public static AssetBundle Assets = null;
-        //public static AssetBundleResourcesProvider Provider;
+        //public static AssetBundleResourcesProvider Provider; 
 
 
         //List other necessary variables and bits here. For example, you may need a list of all your new things to add them to the game properly.
@@ -115,11 +115,11 @@ namespace MyItems_Update
             LogInfo("Instantiate");
             VerifyEquipment(new Custom_Classes.Equipment.Equipment01());
             //VerifyItems(new Base_Classes.ItemBase());
-            //VerifyItems(new Custom_Classes.Items.Item01());
+            VerifyItems(new Custom_Classes.Items.Item01());
             VerifyItems(new Custom_Classes.Items.Item02());
             VerifyItems(new Custom_Classes.Items.Item03());
             VerifyItems(new Custom_Classes.Items.Item04());
-            VerifyItems(new Custom_Classes.Items.Item05());
+
             //VerifyAchievements(new Examples.EXAMPLE_ACHIEVEMENT());
 
         }
@@ -182,12 +182,11 @@ namespace MyItems_Update
         {
             
             Custom_Classes.Equipment.Equipment01.Update();
-
-            //Custom_Classes.Items.Item01.Update();
+            Custom_Classes.Items.Item01.Update();
             Custom_Classes.Items.Item02.Update();
             Custom_Classes.Items.Item03.Update();
             Custom_Classes.Items.Item04.Update();
-            Custom_Classes.Items.Item05.Update();
+
 
         }
 

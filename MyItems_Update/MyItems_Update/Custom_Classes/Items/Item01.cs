@@ -1,6 +1,7 @@
 ﻿using BepInEx.Configuration;
 using R2API;
 using RoR2;
+using RoR2.Projectile;
 using MyItems_Update.Base_Classes;
 using System;
 using System.Collections.Generic;
@@ -8,45 +9,50 @@ using System.Text;
 using UnityEngine;
 using static MyItems_Update.Utils.ItemHelper;
 using static MyItems_Update.Utils.Log;
+using UnityEngine.AddressableAssets;
 
 namespace MyItems_Update.Custom_Classes.Items
 {
     class Item01 : ItemBase
     {
-        public override string ItemName => "reset item";
-        
-        public override string ItemLangTokenName => "COOLDOWNRESET";
+        public override string ItemName => "Stinky Bomb";
 
-        public override string ItemPickupDesc => "Reset cooldowns at the cost of health";
+        public override string ItemLangTokenName => "STINKYBOMB";
 
-        public override string ItemFullDescription => "Using an ability while it's on cooldown will reset its cooldown at the cost of your health";
+        public override string ItemPickupDesc => "Chance on hit to poison surrounding enemies.";
 
-        public override string ItemLore => "woowee it's lore";
+        public override string ItemFullDescription => $"<style=cIsDamage>{ProcChance}%</style> <style=cStack>[+{ProcStack} per stack.]</style> chance on hit to <style=cIsDamage>poison</style> all enemies in the area for <style=cIsDamage>{StinkDamage * StinkDuration * 100}%</style> base damage over 4 seconds.";
 
-        public override ItemTier Tier => ItemTier.Lunar;
+        public override string ItemLore => "the peak of biological warfare";
 
-        public override string ItemModelPath => "Prefabs/PickupModels/PickupMystery";
+        public override ItemTier Tier => ItemTier.Tier1;
 
-        public override string ItemIconPath => "Textures/MiscIcons/texMysteryIcon";
+        public override string ItemModelPath => "Assets/ItemTests/Models/Prefabs/Items/StinkyBomb.prefab";
+        public override string ItemIconPath => "Assets/ItemTests/Textures/Icons/Buffs/T_StinkyIcon.png";
 
-        private static bool TriggerItem = false;
-        private static float CooldownTimer = 0f;
-        public static BuffDef CooldownBuff { get; private set; }
+        public static ItemDef StinkyBomb = ScriptableObject.CreateInstance<ItemDef>();
 
-        private static CharacterBody CharBody = null;
-        private static GenericSkill CharSkill = null;
+        public static BuffDef StinkBombBuff { get; private set; }
+        public static DotController.DotIndex StinkDot { get; private set; }
 
-        private static List<CharacterBody> CharBodiesList = new List<CharacterBody>();
-        public static ItemDef cooldownItem = ScriptableObject.CreateInstance<ItemDef>();
-        //private static string pickupName;
-        //private static ItemIndex pickupIndex;
+        //private string BombModelPath = 
+        public GameObject StinkProjectilePrefab;
+        public GameObject StinkEffectPrefab1;
+        public GameObject StinkEffectPrefab2;
+
+        public static float ProcChance = 100f;
+        public static float ProcStack = 10f;
+        public static float StinkDamage = 0.5f;
+        public static float StinkDamageStack = 0.5f;
+        public static float StinkDuration = 4f;
+        public static float StinkRadius = 10f;
+
 
         public override void CreateConfig(ConfigFile config)
         {
-            
+
         }
 
-        
         public override ItemDisplayRuleDict CreateItemDisplayRules()
         {
             ItemBodyModelPrefab = Main.Assets.LoadAsset<GameObject>(ItemModelPath);
@@ -74,278 +80,205 @@ namespace MyItems_Update.Custom_Classes.Items
 
         public override void Hooks()
         {
-            On.RoR2.CharacterBody.OnSkillActivated += CharacterBody_OnSkillActivated;
-            On.RoR2.CharacterBody.RecalculateStats += CharacterBody_RecalcStats;
-
-            //On.RoR2.CharacterBody.CmdOnSkillActivated += CharacterBody_CmdOnSkillActivated;
-            //On.RoR2.CharacterBody.
+            On.RoR2.GlobalEventManager.OnHitEnemy += GlobalEventManager_OnHitEnemy;
         }
-
 
         public static void SetupAttributes()
         {
 
             //Item.SetupAttributes();
-            CooldownBuff = ScriptableObject.CreateInstance<BuffDef>();
-            CooldownBuff.buffColor = Color.blue;
-            CooldownBuff.canStack = false;
-            CooldownBuff.isDebuff = false;
-            //CooldownBuff.name = T2Module.modInfo.shortIdentifier + "SnakeEyes";
-            CooldownBuff.name = "CooldownBuff";
-            CooldownBuff.iconSprite = Resources.Load<Sprite>("Textures/MiscIcons/texMysteryIcon");
-            //BuffAPI.Add(new CustomBuff(CooldownBuff));
+            StinkBombBuff = ScriptableObject.CreateInstance<BuffDef>();
+            StinkBombBuff.buffColor = Color.yellow;
+            StinkBombBuff.canStack = true;
+            StinkBombBuff.isDebuff = true;
+            StinkBombBuff.name = "StinkBombBuff";
+            //StinkBombBuff.iconSprite = Resources.Load<Sprite>("Textures/MiscIcons/texMysteryIcon");
+            StinkBombBuff.iconSprite = Main.Assets.LoadAsset<Sprite>(Item01.ItemIconPath);
+            ContentAddition.AddBuffDef(StinkBombBuff);
+            DotController.DotDef dotDef = new DotController.DotDef
+            {
+                interval = 0.25f,
+                damageCoefficient = 0.15f,
+                damageColorIndex = DamageColorIndex.Poison,
+                associatedBuff = StinkBombBuff
+            };
+            StinkDot = DotAPI.RegisterDotDef(dotDef, null, null);
+            
         }
 
         public override void Init(ConfigFile config)
         {
             CreateConfig(config);
             //CreateItemDisplayRules();
+            //StinkProjectilePrefab = Addressables.LoadAssetAsync<GameObject>(key: "RoR2/Base/WarCryOnMultiKill/WarCryEffect.prefab").WaitForCompletion();
+            StinkProjectilePrefab = Addressables.LoadAssetAsync<GameObject>(key: "RoR2/Base/MiniMushroom/SporeGrenadeProjectileDotZone.prefab").WaitForCompletion();
+            StinkProjectilePrefab.GetComponent<ProjectileController>().procCoefficient = 0f;
+            //StinkEffectPrefab1 = Addressables.LoadAssetAsync<GameObject>(key: "RoR2/Base/MiniMushroom/SporeGrenadeGasImpact.prefab").WaitForCompletion();
+            StinkEffectPrefab1 = Addressables.LoadAssetAsync<GameObject>(key: "RoR2/Junk/Bandit/SmokescreenEffect.prefab").WaitForCompletion();
+            //StinkEffectPrefab2 = Addressables.LoadAssetAsync<GameObject>(key: "RoR2/Base/Common/VFX/MuzzleflashSmokeRing.prefab").WaitForCompletion();
+
+            StinkEffectPrefab2 = Main.Assets.LoadAsset<GameObject>("Assets/ItemTests/Models/Prefabs/VFX/stinkPoof.prefab");
+            StinkEffectPrefab2.AddComponent<EffectComponent>();
+            StinkEffectPrefab2.AddComponent<VFXAttributes>();
+            //EffectDef effectDef = new EffectDef(StinkEffectPrefab2);
+            ContentAddition.AddEffect(StinkEffectPrefab2);
+
+            //StinkEffectPrefab2.AddComponent<NetworkIdentity>();
+            //StinkEffectPrefab2 = Main.Assets.LoadAsset<GameObject>("Assets/ItemTests/Models/Prefabs/Items/StinkyBomb.prefab");
             CreateLang();
             SetupAttributes();
-            CreateItem(cooldownItem);
-            //pickupIndex = cooldownItem.itemIndex;
+            CreateItem(StinkyBomb);
             Hooks();
-            //pickupName = "ITEM_"  + ItemLangTokenName + "_NAME";
-
+            
         }
 
 
         //////////////////////////----------------------------------------------------------------------------
         //////////////////////////----------------------------------------------------------------------------
 
-        /*
-        private void CharacterBody_CmdOnSkillActivated(On.RoR2.CharacterBody.orig_CmdOnSkillActivated orig, CharacterBody self, sbyte skillIndex)
+        private void GlobalEventManager_OnHitEnemy(On.RoR2.GlobalEventManager.orig_OnHitEnemy orig, GlobalEventManager self, DamageInfo damageInfo, GameObject victim)
         {
-            throw new NotImplementedException();
-        }*/
-
-        private void CharacterBody_RecalcStats(On.RoR2.CharacterBody.orig_RecalculateStats orig, CharacterBody self)
-        {
-            orig(self);
-            if (!self)
-                return ;
+            orig.Invoke(self, damageInfo, victim);
             
-            if (self.inventory)
+            if ( victim && damageInfo.attacker && damageInfo.procCoefficient >= 0f)
             {
-                int itemCount = self.inventory.GetItemCount(cooldownItem.itemIndex);
 
-                if (itemCount > 0 && TriggerItem == true)
+                //CharacterBody component = victim.GetComponent<CharacterBody>();
+                //CharacterBody component2 = damageInfo.attacker.GetComponent<CharacterBody>();
+                CharacterBody characterBody;
+                HealthComponent healthComponent;
+
+                if (victim.TryGetComponent<CharacterBody>(out characterBody) && damageInfo.attacker.TryGetComponent<CharacterBody>(out characterBody)
+                    && victim.TryGetComponent<HealthComponent>(out healthComponent))
                 {
-                    CharSkill = CharBody.skillLocator.special;
                     
-                    float maxCooldown = CharSkill.skillDef.baseRechargeInterval;
-                    float cooldown = maxCooldown - CharSkill.rechargeStopwatch;
-                    float maxDamage = self.healthComponent.fullCombinedHealth / 2;
-
-                    float damageFract = cooldown / maxCooldown;
-
-
-                    float damage = maxDamage * damageFract;
-                    float currentHP = self.healthComponent.combinedHealth;
-
-                    /*
-                    LogInfo($"recharge stopwatch {CharSkill.rechargeStopwatch}");
-                    LogInfo($"base interval {CharSkill.skillDef.baseRechargeInterval}");
-                    LogInfo($"cooldown {cooldown}");
-                    LogInfo($"max hp {self.healthComponent.fullCombinedHealth}");
-                    LogInfo($"max dmg {maxDamage}");
-                    LogInfo($"dmg fract {cooldown} / {maxCooldown} = {damageFract}");
-                    LogInfo($"dmg {maxDamage} * {damageFract} = {damage}");
-                    */
-
-                    /*
-                    max = 50
-
-                    cd = 3
-                    maxCd = 12
-
-                    dmg = 12,5
-
-                    */
-
-
-                    var dmg = new DamageInfo
+                    if (damageInfo.attacker.GetComponent<CharacterBody>().inventory)
                     {
-                        attacker = self.gameObject,
-                        crit = false,
-                        damage = damage*2,
-                        inflictor = null,
-                        position = self.footPosition,
-                        force = new Vector3(0, 0, 0),
-                        damageType = DamageType.NonLethal | DamageType.BypassArmor,
-                        rejected = false,
-                        //procChainMask = default(ProcChainMask)
+                        CharacterBody victimBody = victim.GetComponent<CharacterBody>();
+                        CharacterBody attacker = damageInfo.attacker.GetComponent<CharacterBody>();
+                        float itemCount = attacker.inventory.GetItemCount(StinkyBomb);
 
-                    };
-                    Vector3 corePosition = self.corePosition;
-                    //EntityStates.VagrantMonster.ExplosionAttack.novaEffectPrefab
-                    //EntityStates.GlobalSkills.LunarDetonator.Detonate.detonationEffectPrefab
-                    //EntityStates.Interactables.GoldBeacon.Ready.activationEffectPrefab
-                    EffectManager.SpawnEffect(EntityStates.Interactables.GoldBeacon.Ready.activationEffectPrefab, new EffectData
-                    {
-                        origin = corePosition,
-                        scale = 20f,
-                        rotation = self.coreTransform.rotation
-                    }, true);
-
-                    TriggerItem = false;
-                    self.healthComponent.TakeDamage(dmg);
-                    //LogInfo($"current health {self.healthComponent.combinedHealth}");
-                    //LogInfo($"damage done {currentHP - self.healthComponent.combinedHealth}");
-
-
-
+                        if (itemCount > 0 && Util.CheckRoll(ProcChance + (ProcStack * (itemCount - 1))))
+                        {
+                            //FireBomb(victimBody, attacker, damageInfo);
+                            SpawnStink(victimBody, attacker, damageInfo, StinkBombBuff);
+                        }
+                        
+                    }
                 }
             }
-        }
-        
-        private void CharacterBody_OnSkillActivated(On.RoR2.CharacterBody.orig_OnSkillActivated orig, CharacterBody self, GenericSkill skill)
-        {
-            orig(self, skill);
-
-            if (!self)
-                return;
             
-            if (self.inventory && self.inventory.GetItemCount(cooldownItem.itemIndex) > 0 && self.isPlayerControlled)
+
+        }
+
+        private void FireBomb(CharacterBody victim, CharacterBody attacker, DamageInfo damageInfo)
+        {
+            /*
+            GameObject stinkBomb = null;
+            GameObject gameObject = Resources.Load<GameObject>("prefabs/projectiles/EngiMine");
+            stinkBomb = PrefabAPI.InstantiateClone(gameObject, "FootMine", true);
+            UnityEngine.Object.Destroy(stinkBomb.GetComponent<ProjectileDeployToOwner>());
+            */
+
+
+            //bool alive = victim.healthComponent.alive;
+            //float num11 = 5f;
+            Vector3 position = damageInfo.position;
+            Vector3 forward = victim.corePosition - position;
+            float magnitude = forward.magnitude;
+            Quaternion rotation = (magnitude != 0f) ? Util.QuaternionSafeLookRotation(forward) : UnityEngine.Random.rotationUniform;
+            float damage = Util.OnHitProcDamage(damageInfo.damage, attacker.damage, StinkDamage);
+            StinkProjectilePrefab.GetComponent<ProjectileController>().procCoefficient = 0f;
+            ProjectileManager.instance.FireProjectile(StinkProjectilePrefab, position, rotation, damageInfo.attacker, damage, 0f, damageInfo.crit, DamageColorIndex.Item, null);
+            //ProjectileManager.instance.FireProjectile(StinkProjectilePrefab, position, rotation, damageInfo.attacker, damage, 0f, damageInfo.crit, DamageColorIndex.Item, null, alive ? (magnitude * num11) : -1f);
+
+
+
+            /*
+            FireProjectileInfo fireProjectileInfo = new FireProjectileInfo
             {
+                projectilePrefab = BombModelPath,
+                position = position,
+                rotation = Util.QuaternionSafeLookRotation(this.DetermineFacing(mNum)),
+                procChainMask = procChainMask2,
+                target = victim,
+                owner = gameObject,
+                damage = damage,
+                crit = damageInfo.crit,
+                force = 200f,
+                damageColorIndex = DamageColorIndex.Item
+            };
+            ProjectileManager.instance.FireProjectile(fireProjectileInfo);*/
 
-                CharBodiesList.Add(self);
-                //LogInfo($"cooldown timer {CooldownTimer}");
-                LogInfo(self);
+            /*
+            FireProjectileInfo fireProjectileInfo = default(FireProjectileInfo);
+            fireProjectileInfo.projectilePrefab = StinkProjectilePrefab;
+            fireProjectileInfo.rotation = Quaternion.identity;
+            fireProjectileInfo.owner = attacker.gameObject;
+            fireProjectileInfo.damage = attacker.damage * FistDamageMult;
+            fireProjectileInfo.force = FistForce;
+            fireProjectileInfo.crit = owner.RollCrit();
+            fireProjectileInfo.fuseOverride = delay;
+            fireProjectileInfo.procChainMask = default(ProcChainMask);
 
-                if (skill == self.skillLocator.special)
+            ProjectileManager.instance.FireProjectile(fireProjectileInfo);
+            */
+        }
+
+        private void SpawnStink(CharacterBody victim, CharacterBody attacker, DamageInfo damageInfo, BuffDef stinkBombBuff)
+        {
+            float radius = StinkRadius;
+            Vector3 hitPos = damageInfo.position;
+            SphereSearch sphereSearch = new SphereSearch();
+            List<HurtBox> targets = new List<HurtBox>();
+
+            sphereSearch.origin = hitPos;
+            sphereSearch.mask = LayerIndex.entityPrecise.mask;
+            sphereSearch.radius = radius;
+            sphereSearch.RefreshCandidates();
+            sphereSearch.FilterCandidatesByHurtBoxTeam(TeamMask.GetUnprotectedTeams(attacker.teamComponent.teamIndex));
+            sphereSearch.FilterCandidatesByDistinctHurtBoxEntities();
+            //sphereSearch.OrderCandidatesByDistance();
+            sphereSearch.GetHurtBoxes(targets);
+            sphereSearch.ClearCandidates();
+
+
+            for (int i = 0; i < targets.Count; i++)
+            {
+                HurtBox hurtBox = targets[i];
+                HealthComponent healthComp = hurtBox.healthComponent;
+                if (healthComp != null)
                 {
-                    self.AddTimedBuff(CooldownBuff, 0.25f);
-                    TriggerItem = false;
+                    DotController.InflictDot(healthComp.gameObject, damageInfo.attacker, StinkDot, StinkDuration, 1f, null);
+                    //damageInfo.procChainMask.AddProc(ProcType.BleedOnHit);
                 }
-
-                /*
-                if (self.HasBuff(CooldownBuff))
-                {
-                    TriggerItem = false;
-                    //CooldownTimer = 0.5f;
-                }*/
-
             }
+
+            /*
+            EffectManager.SpawnEffect(StinkEffectPrefab1, new EffectData
+            {
+                origin = corePosition,
+                scale = radius - 1f,
+                //rotation = Util.QuaternionSafeLookRotation(report.damageInfo.force)
+            }, true);*/
+            EffectManager.SpawnEffect(StinkEffectPrefab2, new EffectData
+            {
+                origin = hitPos,
+                scale = radius * 2,
+                //rotation = Util.QuaternionSafeLookRotation(report.damageInfo.force)
+            }, true);
+            LogInfo("particle position: " + hitPos);
         }
 
         public static void Update()
         {
-            //LogInfo("TESTTESTTEST");
             if (Input.GetKeyDown(KeyCode.F2))
             {
-                //Get the player body to use a position:	
                 var transform = PlayerCharacterMasterController.instances[0].master.GetBodyObject().transform;
 
-                //LogInfo(PickupCatalog.FindPickupIndex(cooldownItem.itemIndex));
-                
-                PickupDropletController.CreatePickupDroplet(PickupCatalog.FindPickupIndex(cooldownItem.itemIndex), transform.position, transform.forward * 20f);
+                PickupDropletController.CreatePickupDroplet(PickupCatalog.FindPickupIndex(StinkyBomb.itemIndex), transform.position, transform.forward * 20f);
             }
-            /*
-            if (CooldownTimer > 0f)
-            {
-                CooldownTimer -= Time.deltaTime;
-                if (CooldownTimer < 0f)
-                {
-                    CooldownTimer = 0f;
-                }
-            }*/
-            
-            for (int i = 0; i < CharBodiesList.Count; i++)
-            {
-                if (CharBodiesList[i] == null || CharBodiesList[i].inventory.GetItemCount(cooldownItem.itemIndex) <= 0)
-                {
-                    CharBodiesList.RemoveAt(i);
-                }
-
-                
-                else
-                {
-                    CharBody = CharBodiesList[i];
-                    //LogInfo(CharBody);
-                    CharSkill = CharBody.skillLocator.special;
-
-                    if (CharBody.inputBank.skill4.down == true && CharSkill != null && CharBody.inventory )
-                    {
-                        
-                        int itemCount = CharBody.inventory.GetItemCount(cooldownItem.itemIndex);
-
-                        //LogInfo($"attempt {CharSkill.CanExecute()}");
-
-                        //LogInfo($"cooldown timer {CooldownTimer}");
-
-                        bool notBusy = (!CharSkill.stateMachine.HasPendingState() && !CharSkill.skillDef.IsAlreadyInState(CharSkill));
-                        
-                        if (itemCount > 0 && !CharBody.HasBuff(CooldownBuff) && notBusy)
-                        {
-                            
-                            //CharacterBody_RecalcStats(On.RoR2.CharacterBody.orig_RecalculateStats orig, self);
-                            TriggerItem = true;
-                            CharBody.RecalculateStats(); //dmg user
-
-                            CharSkill.AddOneStock();
-                            //LogInfo("cooldown reset");
-                            bool canExecute = CharSkill.CanExecute();
-                            if (canExecute)
-                            {
-                                CharSkill.ExecuteIfReady();
-                            }
-                            
-                            
-
-
-                            CharBody.AddTimedBuff(CooldownBuff, 4f);
-
-                        }
-                    }
-                }
-            }
-            
-
-            /*
-            if (CharBody!=null)
-            {
-                CharSkill = CharBody.skillLocator.special;
-                if (CharBody.inputBank.skill4.down == true && CharSkill!=null)
-                {
-                    if (CharBody.inventory)
-                    {
-                        int itemCount = CharBody.inventory.GetItemCount(itemDef.itemIndex);
-                        bool canActivate = CharSkill.IsReady();
-
-                        LogInfo($"attempt {canActivate}");
-                        LogInfo($"cooldown timer {CooldownTimer}");
-
-                        if (itemCount > 0 && CooldownTimer == 0f)
-                        {
-                            if (CharSkill.CanExecute())
-                            {
-                                CooldownTimer = 0.5f;
-                                TriggerItem = false;
-                                LogInfo("cooldown not reset");
-                            }
-                            else
-                            {
-                                //CharacterBody_RecalcStats(On.RoR2.CharacterBody.orig_RecalculateStats orig, self);
-                                TriggerItem = true;
-                                CharBody.RecalculateStats();
-
-                                CharSkill.AddOneStock();
-                                LogInfo("cooldown reset");
-                                CooldownTimer = 4f;
-                            }
-                            //LogInfo("press button");
-                        }
-                    }
-                }
-            }
-            */
-
-
-
-
         }
-        
 
     }
 }

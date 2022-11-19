@@ -13,22 +13,22 @@ using static MyItems_Update.Utils.Log;
 namespace MyItems_Update.Custom_Classes.Equipment
 {
     class Equipment01 : EquipmentBase
-    {
+    {  
         public override string EquipmentName => "Stone Gauntlet";
 
         public override string EquipmentLangTokenName => "STONEGAUNTLET";
 
         public override string EquipmentPickupDesc => "Unleash titanic wrath";
 
-        public override string EquipmentFullDescription => "Summons 8 titan fists in a circle around you";
+        public override string EquipmentFullDescription => $"Summon 8 titan fists in a circle around you, each dealing <style=cIsDamage>{FistDamageMult * 100}%</style> damage";
 
         public override string EquipmentLore => "catch these hands";
 
-        public override string EquipmentModelPath => "Prefabs/PickupModels/PickupMystery";
+        public override string EquipmentModelPath => "Assets/ItemTests/Models/Prefabs/Equipment/StoneGauntlet.prefab";
 
-        public override string EquipmentIconPath => "Textures/MiscIcons/texMysteryIcon";
+        public override string EquipmentIconPath => "";
 
-        public override float Cooldown => 60f;
+        public override float Cooldown => 60f;  
 
         public static EquipmentDef EquipItemDef = ScriptableObject.CreateInstance<EquipmentDef>();
 
@@ -72,6 +72,7 @@ namespace MyItems_Update.Custom_Classes.Equipment
             CreateLang();
             FistProjectilePrefab = Resources.Load<GameObject>(FistModelPath);
             CreateEquipment(EquipItemDef);
+            //AddToDroplist();
             //pickupIndex = cooldownItem.itemIndex;
             Hooks();
         }
@@ -188,6 +189,33 @@ namespace MyItems_Update.Custom_Classes.Equipment
                 PickupDropletController.CreatePickupDroplet(PickupCatalog.FindPickupIndex(EquipItemDef.equipmentIndex), transform.position, transform.forward * 20f);
             }
         }
+        
+        //private void AddToDroplist()
+        //{
+            
+        //    CharacterBody droppingBodyBodyComponent = Resources.Load<GameObject>("Prefabs/CharacterBodies/TitanBody").GetComponent<CharacterBody>();
 
+        //    GameObject gameObject = droppingBodyBodyComponent.gameObject;
+        //    //gameObject.bos
+        //    DeathRewards component = gameObject.GetComponent<DeathRewards>();
+        //    PickupIndex pickupIndex = (PickupIndex)component.bossPickup;
+        //    if (component)
+        //    {
+
+        //        if (component.bossPickup.pickupName == string.Empty)
+        //        {
+
+        //        }
+        //        pickupIndex = PickupCatalog.FindPickupIndex(EquipItemDef.equipmentIndex);
+        //        PickupDef pickupDef = PickupCatalog.GetPickupDef(pickupIndex);
+        //        if (pickupDef != null)
+        //        {
+        //            component.bossPickup.pickupName = pickupDef.internalName;
+        //        }
+
+        //    }
+        //    //RoR2.BossGroup.bos
+        //}
+        
     }
 }

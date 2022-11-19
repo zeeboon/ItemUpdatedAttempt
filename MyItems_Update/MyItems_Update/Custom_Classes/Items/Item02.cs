@@ -26,7 +26,7 @@ namespace MyItems_Update.Custom_Classes.Items
 
         public override ItemTier Tier => ItemTier.Tier2;
 
-        public override string ItemModelPath => "Assets/ItemTests/Models/Prefabs/Items/Item_1.prefab";
+        public override string ItemModelPath => "Assets/ItemTests/Models/Prefabs/Items/Nitrogen.prefab";
 
         public override string ItemIconPath => "";
 
