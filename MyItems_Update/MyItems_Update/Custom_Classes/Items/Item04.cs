@@ -29,8 +29,7 @@ namespace MyItems_Update.Custom_Classes.Items
         public override ItemTier Tier => ItemTier.Tier2;
 
         public override string ItemModelPath => "Assets/ItemTests/Models/Prefabs/Items/Doorhandle.prefab";
-
-        public override string ItemIconPath => "";
+        public override string ItemIconPath => "Assets/ItemTests/Textures/Icons/Items/DoorhandleIcon.png";
 
         public static ItemDef DeathItem = ScriptableObject.CreateInstance<ItemDef>();
         public static BuffDef DeathItemBuff { get; private set; }

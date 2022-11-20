@@ -25,8 +25,7 @@ namespace MyItems_Update.Custom_Classes.Equipment
         public override string EquipmentLore => "catch these hands";
 
         public override string EquipmentModelPath => "Assets/ItemTests/Models/Prefabs/Equipment/StoneGauntlet.prefab";
-
-        public override string EquipmentIconPath => "";
+        public override string EquipmentIconPath => "Assets/ItemTests/Textures/Icons/Equipment/StoneGauntletIcon.png";
 
         public override float Cooldown => 60f;  
 
@@ -37,7 +36,7 @@ namespace MyItems_Update.Custom_Classes.Equipment
 
         public GameObject FistProjectilePrefab;
         public float FistForce = 6000f;
-        public float FistDamageMult = 20f;
+        public float FistDamageMult = 15f;
         public float FistDelay = 0.5f;
 
         public override ItemDisplayRuleDict CreateItemDisplayRules()

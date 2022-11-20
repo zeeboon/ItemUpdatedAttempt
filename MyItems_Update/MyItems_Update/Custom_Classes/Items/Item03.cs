@@ -27,8 +27,7 @@ namespace MyItems_Update.Custom_Classes.Items
         public override ItemTier Tier => ItemTier.Tier2;
 
         public override string ItemModelPath => "Assets/ItemTests/Models/Prefabs/Items/Chungus.prefab";
-
-        public override string ItemIconPath => "";
+        public override string ItemIconPath => "Assets/ItemTests/Textures/Icons/Items/ChungusIcon.png";
 
         public static ItemDef KillHeal = ScriptableObject.CreateInstance<ItemDef>();
 

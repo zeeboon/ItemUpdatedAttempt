@@ -21,14 +21,15 @@ namespace MyItems_Update.Custom_Classes.Items
 
         public override string ItemPickupDesc => "Chance on hit to poison surrounding enemies.";
 
-        public override string ItemFullDescription => $"<style=cIsDamage>{ProcChance}%</style> <style=cStack>[+{ProcStack} per stack.]</style> chance on hit to <style=cIsDamage>poison</style> all enemies in the area for <style=cIsDamage>{StinkDamage * StinkDuration * 100}%</style> base damage over 4 seconds.";
+        public override string ItemFullDescription => $"<style=cIsDamage>{ProcChance}%</style> <style=cStack>[+{ProcStack} per stack.]</style> chance on hit to <style=cIsDamage>poison</style> " +
+                                                            $"all enemies in {StinkRadius} meters for <style=cIsDamage>{StinkDamage * StinkDuration * 100}%</style> base damage over 4 seconds.";
 
         public override string ItemLore => "the peak of biological warfare";
 
         public override ItemTier Tier => ItemTier.Tier1;
 
         public override string ItemModelPath => "Assets/ItemTests/Models/Prefabs/Items/StinkyBomb.prefab";
-        public override string ItemIconPath => "Assets/ItemTests/Textures/Icons/Buffs/T_StinkyIcon.png";
+        public override string ItemIconPath => "Assets/ItemTests/Textures/Icons/Items/StinkyBombIcon.png";
 
         public static ItemDef StinkyBomb = ScriptableObject.CreateInstance<ItemDef>();
 
@@ -39,6 +40,7 @@ namespace MyItems_Update.Custom_Classes.Items
         public GameObject StinkProjectilePrefab;
         public GameObject StinkEffectPrefab1;
         public GameObject StinkEffectPrefab2;
+        private EffectData StinkEffect;
 
         public static float ProcChance = 100f;
         public static float ProcStack = 10f;
@@ -83,6 +85,7 @@ namespace MyItems_Update.Custom_Classes.Items
             On.RoR2.GlobalEventManager.OnHitEnemy += GlobalEventManager_OnHitEnemy;
         }
 
+
         public static void SetupAttributes()
         {
 
@@ -93,7 +96,7 @@ namespace MyItems_Update.Custom_Classes.Items
             StinkBombBuff.isDebuff = true;
             StinkBombBuff.name = "StinkBombBuff";
             //StinkBombBuff.iconSprite = Resources.Load<Sprite>("Textures/MiscIcons/texMysteryIcon");
-            StinkBombBuff.iconSprite = Main.Assets.LoadAsset<Sprite>(Item01.ItemIconPath);
+            StinkBombBuff.iconSprite = Main.Assets.LoadAsset<Sprite>("Assets/ItemTests/Textures/Icons/Buffs/StinkyIcon.png");
             ContentAddition.AddBuffDef(StinkBombBuff);
             DotController.DotDef dotDef = new DotController.DotDef
             {
@@ -110,7 +113,6 @@ namespace MyItems_Update.Custom_Classes.Items
         {
             CreateConfig(config);
             //CreateItemDisplayRules();
-            //StinkProjectilePrefab = Addressables.LoadAssetAsync<GameObject>(key: "RoR2/Base/WarCryOnMultiKill/WarCryEffect.prefab").WaitForCompletion();
             StinkProjectilePrefab = Addressables.LoadAssetAsync<GameObject>(key: "RoR2/Base/MiniMushroom/SporeGrenadeProjectileDotZone.prefab").WaitForCompletion();
             StinkProjectilePrefab.GetComponent<ProjectileController>().procCoefficient = 0f;
             //StinkEffectPrefab1 = Addressables.LoadAssetAsync<GameObject>(key: "RoR2/Base/MiniMushroom/SporeGrenadeGasImpact.prefab").WaitForCompletion();
@@ -119,12 +121,15 @@ namespace MyItems_Update.Custom_Classes.Items
 
             StinkEffectPrefab2 = Main.Assets.LoadAsset<GameObject>("Assets/ItemTests/Models/Prefabs/VFX/stinkPoof.prefab");
             StinkEffectPrefab2.AddComponent<EffectComponent>();
+            StinkEffect = new EffectData
+            {
+                scale = (StinkRadius * 0.6f)
+            };
+            StinkEffectPrefab2.GetComponent<EffectComponent>().applyScale = true;
             StinkEffectPrefab2.AddComponent<VFXAttributes>();
-            //EffectDef effectDef = new EffectDef(StinkEffectPrefab2);
             ContentAddition.AddEffect(StinkEffectPrefab2);
 
             //StinkEffectPrefab2.AddComponent<NetworkIdentity>();
-            //StinkEffectPrefab2 = Main.Assets.LoadAsset<GameObject>("Assets/ItemTests/Models/Prefabs/Items/StinkyBomb.prefab");
             CreateLang();
             SetupAttributes();
             CreateItem(StinkyBomb);
@@ -140,15 +145,16 @@ namespace MyItems_Update.Custom_Classes.Items
         {
             orig.Invoke(self, damageInfo, victim);
             
-            if ( victim && damageInfo.attacker && damageInfo.procCoefficient >= 0f)
+            if ( victim && damageInfo.attacker && damageInfo.procCoefficient > 0f)
             {
 
                 //CharacterBody component = victim.GetComponent<CharacterBody>();
                 //CharacterBody component2 = damageInfo.attacker.GetComponent<CharacterBody>();
                 CharacterBody characterBody;
+                CharacterBody characterBody2;
                 HealthComponent healthComponent;
 
-                if (victim.TryGetComponent<CharacterBody>(out characterBody) && damageInfo.attacker.TryGetComponent<CharacterBody>(out characterBody)
+                if (victim.TryGetComponent<CharacterBody>(out characterBody) && damageInfo.attacker.TryGetComponent<CharacterBody>(out characterBody2)
                     && victim.TryGetComponent<HealthComponent>(out healthComponent))
                 {
                     
@@ -167,8 +173,6 @@ namespace MyItems_Update.Custom_Classes.Items
                     }
                 }
             }
-            
-
         }
 
         private void FireBomb(CharacterBody victim, CharacterBody attacker, DamageInfo damageInfo)
@@ -261,12 +265,27 @@ namespace MyItems_Update.Custom_Classes.Items
                 scale = radius - 1f,
                 //rotation = Util.QuaternionSafeLookRotation(report.damageInfo.force)
             }, true);*/
-            EffectManager.SpawnEffect(StinkEffectPrefab2, new EffectData
-            {
-                origin = hitPos,
-                scale = radius * 2,
-                //rotation = Util.QuaternionSafeLookRotation(report.damageInfo.force)
-            }, true);
+
+
+            StinkEffect.origin = hitPos;
+
+
+            //foreach (GameObject child in StinkEffectPrefab2.transform)
+            //{
+            //    child.AddComponent<EffectComponent>();
+            //    child.GetComponent<EffectComponent>().applyScale = true;
+            //}
+
+            //EffectManager.SpawnEffect(StinkEffectPrefab2, new EffectData
+            //{
+            //    origin = hitPos,
+            //    scale = radius * 4,
+            //    //rotation = Util.QuaternionSafeLookRotation(report.damageInfo.force)
+            //}, true);
+
+            EffectManager.SpawnEffect(StinkEffectPrefab2, StinkEffect, true);
+
+
             LogInfo("particle position: " + hitPos);
         }
 

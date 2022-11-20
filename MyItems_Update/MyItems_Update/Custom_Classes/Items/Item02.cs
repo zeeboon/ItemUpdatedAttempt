@@ -27,13 +27,13 @@ namespace MyItems_Update.Custom_Classes.Items
         public override ItemTier Tier => ItemTier.Tier2;
 
         public override string ItemModelPath => "Assets/ItemTests/Models/Prefabs/Items/Nitrogen.prefab";
-
-        public override string ItemIconPath => "";
+        public override string ItemIconPath => "Assets/ItemTests/Textures/Icons/Items/NitrogenIcon.png";
 
         public static ItemDef iceDeathItem = ScriptableObject.CreateInstance<ItemDef>();
 
         private string ExplosionPath = "Prefabs/Effects/ImpactEffects/IgniteExplosionVFX";
-        public GameObject ExplosionPrefab;
+        public GameObject SlowParticlePrefab;
+        private EffectData SlowEffect;
 
         public static float SlowDuration = 3f;
         public static float SlowRadius = 14f; 
@@ -84,7 +84,18 @@ namespace MyItems_Update.Custom_Classes.Items
             CreateConfig(config);
             //CreateItemDisplayRules();
             CreateLang();
-            ExplosionPrefab = Resources.Load<GameObject>(ExplosionPath);
+            //SlowParticlePrefab = Resources.Load<GameObject>(ExplosionPath);
+
+            SlowParticlePrefab = Main.Assets.LoadAsset<GameObject>("Assets/ItemTests/Models/Prefabs/VFX/nitrogenPoof.prefab");
+            SlowParticlePrefab.AddComponent<EffectComponent>();
+            SlowEffect = new EffectData
+            {
+                scale = (SlowRadius * 0.75f)
+            };
+            SlowParticlePrefab.GetComponent<EffectComponent>().applyScale = true;
+            SlowParticlePrefab.AddComponent<VFXAttributes>();
+            ContentAddition.AddEffect(SlowParticlePrefab);
+
             CreateItem(iceDeathItem);
             Hooks();
             //pickupName = ItemName;
@@ -170,7 +181,7 @@ namespace MyItems_Update.Custom_Classes.Items
                 scale = radius+20f,
                 rotation = Util.QuaternionSafeLookRotation(report.damageInfo.force)
             }, true);
-            EffectManager.SpawnEffect(ExplosionPrefab, new EffectData
+            EffectManager.SpawnEffect(SlowParticlePrefab, new EffectData
             {
                 origin = corePosition,
                 scale = radius,
@@ -204,19 +215,21 @@ namespace MyItems_Update.Custom_Classes.Items
             }
 
             
-            EffectManager.SpawnEffect(EntityStates.Bandit2.StealthMode.smokeBombEffectPrefab, new EffectData
-            {
-                origin = corePosition,
-                scale = radius+20f,
-                rotation = Util.QuaternionSafeLookRotation(report.damageInfo.force)
-            }, true);
-            EffectManager.SpawnEffect(ExplosionPrefab, new EffectData
-            {
-                origin = corePosition,
-                scale = radius,
-                rotation = Util.QuaternionSafeLookRotation(report.damageInfo.force)
-            }, true);
-            
+            //EffectManager.SpawnEffect(EntityStates.Bandit2.StealthMode.smokeBombEffectPrefab, new EffectData
+            //{
+            //    origin = corePosition,
+            //    scale = radius+20f,
+            //    rotation = Util.QuaternionSafeLookRotation(report.damageInfo.force)
+            //}, true);
+            //EffectManager.SpawnEffect(SlowParticlePrefab, new EffectData
+            //{
+            //    origin = corePosition,
+            //    scale = radius,
+            //    rotation = Util.QuaternionSafeLookRotation(report.damageInfo.force)
+            //}, true);
+            SlowEffect.origin = corePosition;
+            EffectManager.SpawnEffect(SlowParticlePrefab, SlowEffect, true);
+
         }
 
         private void IceBlast(CharacterBody victimBody, CharacterBody attackerBody, int itemCount, float damage)
