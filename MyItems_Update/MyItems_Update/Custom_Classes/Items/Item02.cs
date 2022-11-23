@@ -20,7 +20,7 @@ namespace MyItems_Update.Custom_Classes.Items
         public override string ItemPickupDesc => "Killing an enemy slows surrounding enemies, with a chance to cause a freezing blast instead";
 
         public override string ItemFullDescription => $"<style=cIsDamage>Killing an enemy</style> causes surrounding enemies to be <style=cIsUtility>slowed</style> by 50% for {SlowDuration} <style=cStack>[+ {SlowDuration / 2} per stack]</style> seconds" +
-                                                        $"\nIn addition, enemies have a {BlastChance}% <style=cStack>[+ {BlastChance / 2}% per stack]</style> chance of <style=cIsDamage>exploding in ice</style>, dealing <style=cIsDamage>{BlastDamageMult * 100}% </style> <style=cStack>[+ {BlastDamageStack * 100} / stack]</style> TOTAL damage and <style=cIsUtility>freezing</style> surrounding enemies.";
+                                                        $"\nIn addition, enemies have a {BlastChance}% chance of <style=cIsDamage>exploding in ice</style>, dealing <style=cIsDamage>{BlastDamageMult * 100}% </style> <style=cStack>[+ {BlastDamageStack * 100} / stack]</style> TOTAL damage and <style=cIsUtility>freezing</style> surrounding enemies.";
         //                                                        +"\n<style=cSub>Enemies killed by the blast always explode.</style>"
         public override string ItemLore => "here's frost in your eye";
 
@@ -39,7 +39,7 @@ namespace MyItems_Update.Custom_Classes.Items
         public static float SlowRadius = 14f; 
         public static float BlastRadius = 10f;
         public static float BlastDamageMult = 2.5f;
-        public static float BlastDamageStack = 0.5f;
+        public static float BlastDamageStack = 1f;
         public static float BlastChance = 10f;
         public static float BlastStackChance = 5f;
 

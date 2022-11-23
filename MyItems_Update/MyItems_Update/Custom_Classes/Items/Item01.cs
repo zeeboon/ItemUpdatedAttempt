@@ -21,8 +21,9 @@ namespace MyItems_Update.Custom_Classes.Items
 
         public override string ItemPickupDesc => "Chance on hit to poison surrounding enemies.";
 
-        public override string ItemFullDescription => $"<style=cIsDamage>{ProcChance}%</style> <style=cStack>[+{ProcStack} per stack.]</style> chance on hit to <style=cIsDamage>poison</style> " +
-                                                            $"all enemies in {StinkRadius} meters for <style=cIsDamage>{StinkDamage * StinkDuration * 100}%</style> base damage over 4 seconds.";
+        public override string ItemFullDescription => $"<style=cIsDamage>{ProcChance}%</style> chance on hit to <style=cIsDamage>poison</style> " +
+                                                            $"all enemies in {StinkRadius} meters for <style=cIsDamage>{StinkDamage * 100}%</style> <style=cStack>[+ {StinkDamageStack * 100}% per stack]</style>" +
+                                                            $" TOTAL damage over 4 seconds.";
 
         public override string ItemLore => "the peak of biological warfare";
 
@@ -36,16 +37,15 @@ namespace MyItems_Update.Custom_Classes.Items
         public static BuffDef StinkBombBuff { get; private set; }
         public static DotController.DotIndex StinkDot { get; private set; }
 
-        //private string BombModelPath = 
         public GameObject StinkProjectilePrefab;
         public GameObject StinkEffectPrefab1;
         public GameObject StinkEffectPrefab2;
         private EffectData StinkEffect;
 
-        public static float ProcChance = 100f;
+        public static float ProcChance = 10f;  //15
         public static float ProcStack = 10f;
-        public static float StinkDamage = 0.5f;
-        public static float StinkDamageStack = 0.5f;
+        public static float StinkDamage = 1.7f;
+        public static float StinkDamageStack = 1f;
         public static float StinkDuration = 4f;
         public static float StinkRadius = 10f;
 
@@ -94,14 +94,14 @@ namespace MyItems_Update.Custom_Classes.Items
             StinkBombBuff.buffColor = Color.yellow;
             StinkBombBuff.canStack = true;
             StinkBombBuff.isDebuff = true;
-            StinkBombBuff.name = "StinkBombBuff";
+            StinkBombBuff.name = "StinkyBombBuff";
             //StinkBombBuff.iconSprite = Resources.Load<Sprite>("Textures/MiscIcons/texMysteryIcon");
             StinkBombBuff.iconSprite = Main.Assets.LoadAsset<Sprite>("Assets/ItemTests/Textures/Icons/Buffs/StinkyIcon.png");
             ContentAddition.AddBuffDef(StinkBombBuff);
             DotController.DotDef dotDef = new DotController.DotDef
             {
-                interval = 0.25f,
-                damageCoefficient = 0.15f,
+                interval = 1f,
+                damageCoefficient = 1f / StinkDuration,
                 damageColorIndex = DamageColorIndex.Poison,
                 associatedBuff = StinkBombBuff
             };
@@ -162,12 +162,12 @@ namespace MyItems_Update.Custom_Classes.Items
                     {
                         CharacterBody victimBody = victim.GetComponent<CharacterBody>();
                         CharacterBody attacker = damageInfo.attacker.GetComponent<CharacterBody>();
-                        float itemCount = attacker.inventory.GetItemCount(StinkyBomb);
+                        int itemCount = attacker.inventory.GetItemCount(StinkyBomb);
 
-                        if (itemCount > 0 && Util.CheckRoll(ProcChance + (ProcStack * (itemCount - 1))))
+                        if (itemCount > 0 && Util.CheckRoll(ProcChance * damageInfo.procCoefficient))
                         {
                             //FireBomb(victimBody, attacker, damageInfo);
-                            SpawnStink(victimBody, attacker, damageInfo, StinkBombBuff);
+                            SpawnStink(victimBody, attacker, damageInfo, StinkBombBuff, itemCount);
                         }
                         
                     }
@@ -229,7 +229,7 @@ namespace MyItems_Update.Custom_Classes.Items
             */
         }
 
-        private void SpawnStink(CharacterBody victim, CharacterBody attacker, DamageInfo damageInfo, BuffDef stinkBombBuff)
+        private void SpawnStink(CharacterBody victimBody, CharacterBody attackerBody, DamageInfo damageInfo, BuffDef stinkBombBuff, int itemCount)
         {
             float radius = StinkRadius;
             Vector3 hitPos = damageInfo.position;
@@ -240,7 +240,7 @@ namespace MyItems_Update.Custom_Classes.Items
             sphereSearch.mask = LayerIndex.entityPrecise.mask;
             sphereSearch.radius = radius;
             sphereSearch.RefreshCandidates();
-            sphereSearch.FilterCandidatesByHurtBoxTeam(TeamMask.GetUnprotectedTeams(attacker.teamComponent.teamIndex));
+            sphereSearch.FilterCandidatesByHurtBoxTeam(TeamMask.GetUnprotectedTeams(attackerBody.teamComponent.teamIndex));
             sphereSearch.FilterCandidatesByDistinctHurtBoxEntities();
             //sphereSearch.OrderCandidatesByDistance();
             sphereSearch.GetHurtBoxes(targets);
@@ -251,10 +251,26 @@ namespace MyItems_Update.Custom_Classes.Items
             {
                 HurtBox hurtBox = targets[i];
                 HealthComponent healthComp = hurtBox.healthComponent;
-                if (healthComp != null)
+                if (healthComp != null && itemCount > 0)
                 {
-                    DotController.InflictDot(healthComp.gameObject, damageInfo.attacker, StinkDot, StinkDuration, 1f, null);
+                    //float dmgValue = (float)itemCount * 1f * attackerBody.damage;
+                    float dmgValue = (1.7f + (itemCount - 1)) * damageInfo.damage;
+                    InflictDotInfo inflictDotInfo = new InflictDotInfo
+                    {
+                        victimObject = hurtBox.healthComponent.gameObject,
+                        attackerObject = damageInfo.attacker,
+                        //totalDamage = new float?(dmgValue),
+                        
+                        dotIndex = StinkDot,
+                        damageMultiplier = (damageInfo.damage / attackerBody.damage)    //get total dmg
+                                                * (1.7f + (itemCount - 1)),             //dmg coefficient
+                        duration = StinkDuration
+                    };
+                    LogInfo("damageinfo.damage" + damageInfo.damage);
+                    LogInfo("attackerBody.damage" + attackerBody.damage);
+                    //DotController.InflictDot(healthComp.gameObject, damageInfo.attacker, StinkDot, StinkDuration, 1f, null);
                     //damageInfo.procChainMask.AddProc(ProcType.BleedOnHit);
+                    DotController.InflictDot(ref inflictDotInfo);
                 }
             }
 
