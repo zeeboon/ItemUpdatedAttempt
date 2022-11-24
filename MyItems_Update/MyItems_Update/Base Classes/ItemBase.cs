@@ -80,7 +80,8 @@ namespace MyItems_Update.Base_Classes
             itemDef.pickupToken = "ITEM_" + ItemLangTokenName + "_PICKUP";
             itemDef.descriptionToken = "ITEM_" + ItemLangTokenName + "_DESCRIPTION";
             itemDef.loreToken = "ITEM_" + ItemLangTokenName + "_LORE";
-
+            //itemDef.tags = itemTags;
+            
             //itemDef.pickupModelPrefab = Main.Assets.LoadAsset<GameObject>(ItemModelPath);
             //itemDef.pickupIconSprite = Main.Assets.LoadAsset<Sprite>(ItemIconPath);
 
@@ -88,14 +89,12 @@ namespace MyItems_Update.Base_Classes
             //----------    
             if (ItemModelPath == "")
             {
-                
                 itemDef.pickupModelPrefab = Resources.Load<GameObject>("Prefabs/PickupModels/PickupMystery");
             }
             else
             {
                 itemDef.pickupModelPrefab = Main.Assets.LoadAsset<GameObject>(ItemModelPath);
                 //string prefab = "Assets/ItemTests/Models/prefabs/Item/item1/Item_1.prefab";
-                
             }
             if (ItemIconPath == "")
             {
@@ -112,8 +111,12 @@ namespace MyItems_Update.Base_Classes
 
             itemDef.hidden = Hidden;
             itemDef.tags = ItemTags;
+            foreach (var item in itemDef.tags)
+            {
+                LogInfo("itemtags: " + item);
+            }
             itemDef.canRemove = CanRemove;
-            
+            //itemDef.canRemove = true;
             itemDef.deprecatedTier = Tier;
             /*
 #pragma warning disable Publicizer001 // Accessing a member that was not originally public. Here we ignore this warning because with how this example is setup we are forced to do this

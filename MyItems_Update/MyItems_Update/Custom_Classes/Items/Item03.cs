@@ -25,6 +25,9 @@ namespace MyItems_Update.Custom_Classes.Items
         public override string ItemLore => "a big cartoon mushroom";
 
         public override ItemTier Tier => ItemTier.Tier2;
+        public override ItemTag[] ItemTags { get; } = { ItemTag.Healing };
+
+        public override bool CanRemove { get; } = true;
 
         public override string ItemModelPath => "Assets/ItemTests/Models/Prefabs/Items/Chungus.prefab";
         public override string ItemIconPath => "Assets/ItemTests/Textures/Icons/Items/ChungusIcon.png";
@@ -73,6 +76,7 @@ namespace MyItems_Update.Custom_Classes.Items
 
         public override void Init(ConfigFile config)
         {
+
             CreateConfig(config);
             //CreateItemDisplayRules();
             CreateLang();
@@ -128,24 +132,25 @@ namespace MyItems_Update.Custom_Classes.Items
 
             if (damageInfo != null && self != null && damageInfo.attacker != null)
             {
-                if (damageInfo.attacker.GetComponent<CharacterBody>().inventory)
+                if (damageInfo.attacker.GetComponent<CharacterBody>() != null)
                 {
-                    itemCount = damageInfo.attacker.GetComponent<CharacterBody>().inventory.GetItemCount(KillHeal);
-
-                    if (itemCount > 0)
+                    if (damageInfo.attacker.GetComponent<CharacterBody>().inventory != null)
                     {
-                        CharacterBody victimBody = self ? self.GetComponent<CharacterBody>() : null;
-                        currentHealth = victimBody.healthComponent.combinedHealth;
-                        LogInfo($"KILL HEAL");
-                        killHeal = true;
+                        itemCount = damageInfo.attacker.GetComponent<CharacterBody>().inventory.GetItemCount(KillHeal);
+
+                        if (itemCount > 0)
+                        {
+                            CharacterBody victimBody = self ? self.GetComponent<CharacterBody>() : null;
+                            currentHealth = victimBody.healthComponent.combinedHealth;
+                            LogInfo($"KILL HEAL");
+                            killHeal = true;
+                        }
                     }
                 }
-
-
             }
 
             orig(self, damageInfo);
-            
+
 
             if (self.GetComponent<CharacterBody>().healthComponent.combinedHealth <= 0 && killHeal == true && damageInfo.attacker.GetComponent<CharacterBody>().inventory.GetItemCount(KillHeal) > 0)
             {

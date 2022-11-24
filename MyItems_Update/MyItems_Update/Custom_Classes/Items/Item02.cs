@@ -25,13 +25,15 @@ namespace MyItems_Update.Custom_Classes.Items
         public override string ItemLore => "here's frost in your eye";
 
         public override ItemTier Tier => ItemTier.Tier2;
+        public override ItemTag[] ItemTags { get; } = { ItemTag.Damage, ItemTag.OnKillEffect, ItemTag.Utility };
+
+        public override bool CanRemove { get; } = true;
 
         public override string ItemModelPath => "Assets/ItemTests/Models/Prefabs/Items/Nitrogen.prefab";
         public override string ItemIconPath => "Assets/ItemTests/Textures/Icons/Items/NitrogenIcon.png";
 
         public static ItemDef iceDeathItem = ScriptableObject.CreateInstance<ItemDef>();
 
-        private string ExplosionPath = "Prefabs/Effects/ImpactEffects/IgniteExplosionVFX";
         public GameObject SlowParticlePrefab;
         private EffectData SlowEffect;
 
@@ -81,6 +83,7 @@ namespace MyItems_Update.Custom_Classes.Items
 
         public override void Init(ConfigFile config)
         {
+
             CreateConfig(config);
             //CreateItemDisplayRules();
             CreateLang();
@@ -122,7 +125,7 @@ namespace MyItems_Update.Custom_Classes.Items
                 int itemCount = attackerBody.inventory.GetItemCount(iceDeathItem.itemIndex);
 
                 if (itemCount > 0 &&
-                    Util.CheckRoll(BlastChance + (float)((itemCount-1) * BlastStackChance), attackerBody.master))
+                    Util.CheckRoll(BlastChance, attackerBody.master))
                 {
                     IceBlast(victimBody, attackerBody, itemCount, damage);
                 }

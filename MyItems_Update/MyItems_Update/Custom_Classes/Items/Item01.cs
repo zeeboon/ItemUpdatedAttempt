@@ -34,6 +34,10 @@ namespace MyItems_Update.Custom_Classes.Items
 
         public static ItemDef StinkyBomb = ScriptableObject.CreateInstance<ItemDef>();
 
+        public override ItemTag[] ItemTags { get; } = { ItemTag.Damage };
+
+        public override bool CanRemove { get; } = true;
+
         public static BuffDef StinkBombBuff { get; private set; }
         public static DotController.DotIndex StinkDot { get; private set; }
 
@@ -42,7 +46,7 @@ namespace MyItems_Update.Custom_Classes.Items
         public GameObject StinkEffectPrefab2;
         private EffectData StinkEffect;
 
-        public static float ProcChance = 10f;  //15
+        public static float ProcChance = 10f; 
         public static float ProcStack = 10f;
         public static float StinkDamage = 1.7f;
         public static float StinkDamageStack = 1f;
@@ -88,6 +92,7 @@ namespace MyItems_Update.Custom_Classes.Items
 
         public static void SetupAttributes()
         {
+            
 
             //Item.SetupAttributes();
             StinkBombBuff = ScriptableObject.CreateInstance<BuffDef>();
@@ -111,6 +116,7 @@ namespace MyItems_Update.Custom_Classes.Items
 
         public override void Init(ConfigFile config)
         {
+
             CreateConfig(config);
             //CreateItemDisplayRules();
             StinkProjectilePrefab = Addressables.LoadAssetAsync<GameObject>(key: "RoR2/Base/MiniMushroom/SporeGrenadeProjectileDotZone.prefab").WaitForCompletion();
@@ -263,11 +269,10 @@ namespace MyItems_Update.Custom_Classes.Items
                         
                         dotIndex = StinkDot,
                         damageMultiplier = (damageInfo.damage / attackerBody.damage)    //get total dmg
-                                                * (1.7f + (itemCount - 1)),             //dmg coefficient
+                                                * (1.7f + (itemCount - 1)),             //dmg coefficient 170% + 100% /stack
                         duration = StinkDuration
                     };
-                    LogInfo("damageinfo.damage" + damageInfo.damage);
-                    LogInfo("attackerBody.damage" + attackerBody.damage);
+
                     //DotController.InflictDot(healthComp.gameObject, damageInfo.attacker, StinkDot, StinkDuration, 1f, null);
                     //damageInfo.procChainMask.AddProc(ProcType.BleedOnHit);
                     DotController.InflictDot(ref inflictDotInfo);
