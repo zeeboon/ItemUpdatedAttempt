@@ -22,7 +22,7 @@ namespace MyItems_Update.Custom_Classes.Items
         public override string ItemFullDescription => $"<style=cIsDamage>Killing an enemy</style> causes surrounding enemies to be <style=cIsUtility>slowed</style> by 50% for {SlowDuration} <style=cStack>[+ {SlowDuration / 2} per stack]</style> seconds" +
                                                         $"\nIn addition, enemies have a {BlastChance}% chance of <style=cIsDamage>exploding in ice</style>, dealing <style=cIsDamage>{BlastDamageMult * 100}% </style> <style=cStack>[+ {BlastDamageStack * 100} / stack]</style> TOTAL damage and <style=cIsUtility>freezing</style> surrounding enemies.";
         //                                                        +"\n<style=cSub>Enemies killed by the blast always explode.</style>"
-        public override string ItemLore => "here's frost in your eye";
+        public override string ItemLore => "i scream, you scream, we all scream, help we're dying";
 
         public override ItemTier Tier => ItemTier.Tier2;
         public override ItemTag[] ItemTags { get; } = { ItemTag.Damage, ItemTag.OnKillEffect, ItemTag.Utility };
@@ -87,7 +87,6 @@ namespace MyItems_Update.Custom_Classes.Items
             CreateConfig(config);
             //CreateItemDisplayRules();
             CreateLang();
-            //SlowParticlePrefab = Resources.Load<GameObject>(ExplosionPath);
 
             SlowParticlePrefab = Main.Assets.LoadAsset<GameObject>("Assets/ItemTests/Models/Prefabs/VFX/nitrogenPoof.prefab");
             SlowParticlePrefab.AddComponent<EffectComponent>();
@@ -101,7 +100,6 @@ namespace MyItems_Update.Custom_Classes.Items
 
             CreateItem(iceDeathItem);
             Hooks();
-            //pickupName = ItemName;
             
         }
 
@@ -140,58 +138,7 @@ namespace MyItems_Update.Custom_Classes.Items
 
         private void SlowOnDeath(CharacterBody victimBody, CharacterBody attackerBody, int itemCount, DamageReport report)
         {
-            
-            
-            /*
-            GlobalEventManager.igniteOnKillSphereSearch.origin = corePosition;
-            GlobalEventManager.igniteOnKillSphereSearch.mask = LayerIndex.entityPrecise.mask;
-            GlobalEventManager.igniteOnKillSphereSearch.radius = radius;
-            GlobalEventManager.igniteOnKillSphereSearch.RefreshCandidates();
-            GlobalEventManager.igniteOnKillSphereSearch.FilterCandidatesByHurtBoxTeam(TeamMask.GetUnprotectedTeams(attackerBody.teamComponent.teamIndex));
-            GlobalEventManager.igniteOnKillSphereSearch.FilterCandidatesByDistinctHurtBoxEntities();
-            GlobalEventManager.igniteOnKillSphereSearch.OrderCandidatesByDistance();
-            GlobalEventManager.igniteOnKillSphereSearch.GetHurtBoxes(GlobalEventManager.igniteOnKillHurtBoxBuffer);
-            GlobalEventManager.igniteOnKillSphereSearch.ClearCandidates();
 
-            for (int i = 0; i < GlobalEventManager.igniteOnKillHurtBoxBuffer.Count; i++)
-            {
-                HurtBox hurtBox = GlobalEventManager.igniteOnKillHurtBoxBuffer[i];
-                if (hurtBox.healthComponent)
-                {
-                    hurtBox.healthComponent.body.AddTimedBuff(RoR2Content.Buffs.Slow50, (SlowDuration / 2)  + (SlowDuration / 2) * (float)itemCount);
-                }
-            }
-            
-            GlobalEventManager.igniteOnKillHurtBoxBuffer.Clear();
-            /*new BlastAttack
-            {
-                radius = num2,
-                baseDamage = baseDamage,
-                procCoefficient = 0f,
-                crit = Util.CheckRoll(attackerBody.crit, attackerBody.master),
-                damageColorIndex = DamageColorIndex.Item,
-                attackerFiltering = AttackerFiltering.Default,
-                falloffModel = BlastAttack.FalloffModel.None,
-                attacker = attackerBody.gameObject,
-                teamIndex = attackerBody.teamComponent.teamIndex,
-                position = corePosition
-            }.Fire();*/
-
-            /*
-            EffectManager.SpawnEffect(EntityStates.Bandit2.StealthMode.smokeBombEffectPrefab, new EffectData
-            {
-                origin = corePosition,
-                scale = radius+20f,
-                rotation = Util.QuaternionSafeLookRotation(report.damageInfo.force)
-            }, true);
-            EffectManager.SpawnEffect(SlowParticlePrefab, new EffectData
-            {
-                origin = corePosition,
-                scale = radius,
-                rotation = Util.QuaternionSafeLookRotation(report.damageInfo.force)
-            }, true);
-            */
-            
             float radius = victimBody.radius + SlowRadius;
             Vector3 corePosition = victimBody.corePosition;
             SphereSearch sphereSearch = new SphereSearch();
@@ -217,19 +164,6 @@ namespace MyItems_Update.Custom_Classes.Items
                 }
             }
 
-            
-            //EffectManager.SpawnEffect(EntityStates.Bandit2.StealthMode.smokeBombEffectPrefab, new EffectData
-            //{
-            //    origin = corePosition,
-            //    scale = radius+20f,
-            //    rotation = Util.QuaternionSafeLookRotation(report.damageInfo.force)
-            //}, true);
-            //EffectManager.SpawnEffect(SlowParticlePrefab, new EffectData
-            //{
-            //    origin = corePosition,
-            //    scale = radius,
-            //    rotation = Util.QuaternionSafeLookRotation(report.damageInfo.force)
-            //}, true);
             SlowEffect.origin = corePosition;
             EffectManager.SpawnEffect(SlowParticlePrefab, SlowEffect, true);
 
@@ -247,7 +181,6 @@ namespace MyItems_Update.Custom_Classes.Items
 
             DelayBlast component = gameObject2.GetComponent<DelayBlast>();
             component.position = corePosition;
-            //component.baseDamage = attackerBody.damage * BlastDamageMult + (BlastDamageStack * (float)(itemCount -1 ));
             component.baseDamage = newDamage;
             component.baseForce = 2300f;
             component.attacker = attackerBody.gameObject;
@@ -257,22 +190,21 @@ namespace MyItems_Update.Custom_Classes.Items
             component.maxTimer = 0.2f;
             component.falloffModel = BlastAttack.FalloffModel.None;
             component.explosionEffect = Resources.Load<GameObject>("Prefabs/Effects/ImpactEffects/AffixWhiteExplosion");
-            //component.delayEffect = Resources.Load<GameObject>("Prefabs/Effects/AffixWhiteDelayEffect");
             component.damageType = DamageType.Freeze2s;
             gameObject2.GetComponent<TeamFilter>().teamIndex = attackerBody.teamComponent.teamIndex;
         }
 
         public static void Update()
         {
-            if (Input.GetKeyDown(KeyCode.F3))
-            {
+            //if (Input.GetKeyDown(KeyCode.F3))
+            //{
                 	
-                var transform = PlayerCharacterMasterController.instances[0].master.GetBodyObject().transform;
+            //    var transform = PlayerCharacterMasterController.instances[0].master.GetBodyObject().transform;
 
-                //LogInfo(PickupCatalog.FindPickupIndex(iceDeathItem.itemIndex));
-                PickupDropletController.CreatePickupDroplet(PickupCatalog.FindPickupIndex(iceDeathItem.itemIndex), transform.position, transform.forward * 20f);
+            //    //LogInfo(PickupCatalog.FindPickupIndex(iceDeathItem.itemIndex));
+            //    PickupDropletController.CreatePickupDroplet(PickupCatalog.FindPickupIndex(iceDeathItem.itemIndex), transform.position, transform.forward * 20f);
                 
-            }
+            //}
         }
     }
 }

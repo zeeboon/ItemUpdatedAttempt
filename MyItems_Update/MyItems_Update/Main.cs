@@ -90,9 +90,6 @@ namespace MyItems_Update
 
             //runs hooks that are seperate from all additions (i.e, if you need to call something when the game runs or at special times)
             Hooks();
-
-            //Custom_Classes.Items.Item01.SetupAttributes();
-
         }
 
         public void Configs()
@@ -112,16 +109,11 @@ namespace MyItems_Update
         //we make calls to Verify on each thing here to make our call in Awake clean
         public void Instantiate()
         {
-            LogInfo("Instantiate");
             VerifyEquipment(new Custom_Classes.Equipment.Equipment01());
-            //VerifyItems(new Base_Classes.ItemBase());
             VerifyItems(new Custom_Classes.Items.Item01());
             VerifyItems(new Custom_Classes.Items.Item02());
             VerifyItems(new Custom_Classes.Items.Item03());
             VerifyItems(new Custom_Classes.Items.Item04());
-
-            //VerifyAchievements(new Examples.EXAMPLE_ACHIEVEMENT());
-
         }
 
         //this method will instantiate our items based on a generated config option
@@ -139,8 +131,6 @@ namespace MyItems_Update
                 item.Init(base.Config);
 
             }
-            LogInfo($"verify {item.ItemName}");
-
         }
 
         public void VerifyEquipment(EquipmentBase equip)
@@ -157,8 +147,6 @@ namespace MyItems_Update
                 equip.Init(base.Config);
 
             }
-            LogInfo($"verify {equip.EquipmentName}");
-
         }
 
         //this method will instantiate our achievements based on a generated config option
@@ -181,11 +169,11 @@ namespace MyItems_Update
         private void Update()
         {
             
-            Custom_Classes.Equipment.Equipment01.Update();
-            Custom_Classes.Items.Item01.Update();
-            Custom_Classes.Items.Item02.Update();
-            Custom_Classes.Items.Item03.Update();
-            Custom_Classes.Items.Item04.Update();
+            //Custom_Classes.Equipment.Equipment01.Update();
+            //Custom_Classes.Items.Item01.Update();
+            //Custom_Classes.Items.Item02.Update();
+            //Custom_Classes.Items.Item03.Update();
+            //Custom_Classes.Items.Item04.Update();
 
 
         }

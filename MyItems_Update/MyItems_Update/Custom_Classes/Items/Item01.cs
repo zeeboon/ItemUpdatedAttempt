@@ -92,15 +92,11 @@ namespace MyItems_Update.Custom_Classes.Items
 
         public static void SetupAttributes()
         {
-            
-
-            //Item.SetupAttributes();
             StinkBombBuff = ScriptableObject.CreateInstance<BuffDef>();
             StinkBombBuff.buffColor = Color.yellow;
             StinkBombBuff.canStack = true;
             StinkBombBuff.isDebuff = true;
             StinkBombBuff.name = "StinkyBombBuff";
-            //StinkBombBuff.iconSprite = Resources.Load<Sprite>("Textures/MiscIcons/texMysteryIcon");
             StinkBombBuff.iconSprite = Main.Assets.LoadAsset<Sprite>("Assets/ItemTests/Textures/Icons/Buffs/StinkyIcon.png");
             ContentAddition.AddBuffDef(StinkBombBuff);
             DotController.DotDef dotDef = new DotController.DotDef
@@ -121,9 +117,6 @@ namespace MyItems_Update.Custom_Classes.Items
             //CreateItemDisplayRules();
             StinkProjectilePrefab = Addressables.LoadAssetAsync<GameObject>(key: "RoR2/Base/MiniMushroom/SporeGrenadeProjectileDotZone.prefab").WaitForCompletion();
             StinkProjectilePrefab.GetComponent<ProjectileController>().procCoefficient = 0f;
-            //StinkEffectPrefab1 = Addressables.LoadAssetAsync<GameObject>(key: "RoR2/Base/MiniMushroom/SporeGrenadeGasImpact.prefab").WaitForCompletion();
-            StinkEffectPrefab1 = Addressables.LoadAssetAsync<GameObject>(key: "RoR2/Junk/Bandit/SmokescreenEffect.prefab").WaitForCompletion();
-            //StinkEffectPrefab2 = Addressables.LoadAssetAsync<GameObject>(key: "RoR2/Base/Common/VFX/MuzzleflashSmokeRing.prefab").WaitForCompletion();
 
             StinkEffectPrefab2 = Main.Assets.LoadAsset<GameObject>("Assets/ItemTests/Models/Prefabs/VFX/stinkPoof.prefab");
             StinkEffectPrefab2.AddComponent<EffectComponent>();
@@ -135,7 +128,6 @@ namespace MyItems_Update.Custom_Classes.Items
             StinkEffectPrefab2.AddComponent<VFXAttributes>();
             ContentAddition.AddEffect(StinkEffectPrefab2);
 
-            //StinkEffectPrefab2.AddComponent<NetworkIdentity>();
             CreateLang();
             SetupAttributes();
             CreateItem(StinkyBomb);
@@ -154,8 +146,6 @@ namespace MyItems_Update.Custom_Classes.Items
             if ( victim && damageInfo.attacker && damageInfo.procCoefficient > 0f)
             {
 
-                //CharacterBody component = victim.GetComponent<CharacterBody>();
-                //CharacterBody component2 = damageInfo.attacker.GetComponent<CharacterBody>();
                 CharacterBody characterBody;
                 CharacterBody characterBody2;
                 HealthComponent healthComponent;
@@ -172,67 +162,12 @@ namespace MyItems_Update.Custom_Classes.Items
 
                         if (itemCount > 0 && Util.CheckRoll(ProcChance * damageInfo.procCoefficient))
                         {
-                            //FireBomb(victimBody, attacker, damageInfo);
                             SpawnStink(victimBody, attacker, damageInfo, StinkBombBuff, itemCount);
                         }
                         
                     }
                 }
             }
-        }
-
-        private void FireBomb(CharacterBody victim, CharacterBody attacker, DamageInfo damageInfo)
-        {
-            /*
-            GameObject stinkBomb = null;
-            GameObject gameObject = Resources.Load<GameObject>("prefabs/projectiles/EngiMine");
-            stinkBomb = PrefabAPI.InstantiateClone(gameObject, "FootMine", true);
-            UnityEngine.Object.Destroy(stinkBomb.GetComponent<ProjectileDeployToOwner>());
-            */
-
-
-            //bool alive = victim.healthComponent.alive;
-            //float num11 = 5f;
-            Vector3 position = damageInfo.position;
-            Vector3 forward = victim.corePosition - position;
-            float magnitude = forward.magnitude;
-            Quaternion rotation = (magnitude != 0f) ? Util.QuaternionSafeLookRotation(forward) : UnityEngine.Random.rotationUniform;
-            float damage = Util.OnHitProcDamage(damageInfo.damage, attacker.damage, StinkDamage);
-            StinkProjectilePrefab.GetComponent<ProjectileController>().procCoefficient = 0f;
-            ProjectileManager.instance.FireProjectile(StinkProjectilePrefab, position, rotation, damageInfo.attacker, damage, 0f, damageInfo.crit, DamageColorIndex.Item, null);
-            //ProjectileManager.instance.FireProjectile(StinkProjectilePrefab, position, rotation, damageInfo.attacker, damage, 0f, damageInfo.crit, DamageColorIndex.Item, null, alive ? (magnitude * num11) : -1f);
-
-
-
-            /*
-            FireProjectileInfo fireProjectileInfo = new FireProjectileInfo
-            {
-                projectilePrefab = BombModelPath,
-                position = position,
-                rotation = Util.QuaternionSafeLookRotation(this.DetermineFacing(mNum)),
-                procChainMask = procChainMask2,
-                target = victim,
-                owner = gameObject,
-                damage = damage,
-                crit = damageInfo.crit,
-                force = 200f,
-                damageColorIndex = DamageColorIndex.Item
-            };
-            ProjectileManager.instance.FireProjectile(fireProjectileInfo);*/
-
-            /*
-            FireProjectileInfo fireProjectileInfo = default(FireProjectileInfo);
-            fireProjectileInfo.projectilePrefab = StinkProjectilePrefab;
-            fireProjectileInfo.rotation = Quaternion.identity;
-            fireProjectileInfo.owner = attacker.gameObject;
-            fireProjectileInfo.damage = attacker.damage * FistDamageMult;
-            fireProjectileInfo.force = FistForce;
-            fireProjectileInfo.crit = owner.RollCrit();
-            fireProjectileInfo.fuseOverride = delay;
-            fireProjectileInfo.procChainMask = default(ProcChainMask);
-
-            ProjectileManager.instance.FireProjectile(fireProjectileInfo);
-            */
         }
 
         private void SpawnStink(CharacterBody victimBody, CharacterBody attackerBody, DamageInfo damageInfo, BuffDef stinkBombBuff, int itemCount)
@@ -248,10 +183,8 @@ namespace MyItems_Update.Custom_Classes.Items
             sphereSearch.RefreshCandidates();
             sphereSearch.FilterCandidatesByHurtBoxTeam(TeamMask.GetUnprotectedTeams(attackerBody.teamComponent.teamIndex));
             sphereSearch.FilterCandidatesByDistinctHurtBoxEntities();
-            //sphereSearch.OrderCandidatesByDistance();
             sphereSearch.GetHurtBoxes(targets);
             sphereSearch.ClearCandidates();
-
 
             for (int i = 0; i < targets.Count; i++)
             {
@@ -259,13 +192,11 @@ namespace MyItems_Update.Custom_Classes.Items
                 HealthComponent healthComp = hurtBox.healthComponent;
                 if (healthComp != null && itemCount > 0)
                 {
-                    //float dmgValue = (float)itemCount * 1f * attackerBody.damage;
                     float dmgValue = (1.7f + (itemCount - 1)) * damageInfo.damage;
                     InflictDotInfo inflictDotInfo = new InflictDotInfo
                     {
                         victimObject = hurtBox.healthComponent.gameObject,
                         attackerObject = damageInfo.attacker,
-                        //totalDamage = new float?(dmgValue),
                         
                         dotIndex = StinkDot,
                         damageMultiplier = (damageInfo.damage / attackerBody.damage)    //get total dmg
@@ -273,51 +204,23 @@ namespace MyItems_Update.Custom_Classes.Items
                         duration = StinkDuration
                     };
 
-                    //DotController.InflictDot(healthComp.gameObject, damageInfo.attacker, StinkDot, StinkDuration, 1f, null);
-                    //damageInfo.procChainMask.AddProc(ProcType.BleedOnHit);
                     DotController.InflictDot(ref inflictDotInfo);
                 }
             }
 
-            /*
-            EffectManager.SpawnEffect(StinkEffectPrefab1, new EffectData
-            {
-                origin = corePosition,
-                scale = radius - 1f,
-                //rotation = Util.QuaternionSafeLookRotation(report.damageInfo.force)
-            }, true);*/
-
-
             StinkEffect.origin = hitPos;
 
-
-            //foreach (GameObject child in StinkEffectPrefab2.transform)
-            //{
-            //    child.AddComponent<EffectComponent>();
-            //    child.GetComponent<EffectComponent>().applyScale = true;
-            //}
-
-            //EffectManager.SpawnEffect(StinkEffectPrefab2, new EffectData
-            //{
-            //    origin = hitPos,
-            //    scale = radius * 4,
-            //    //rotation = Util.QuaternionSafeLookRotation(report.damageInfo.force)
-            //}, true);
-
             EffectManager.SpawnEffect(StinkEffectPrefab2, StinkEffect, true);
-
-
-            LogInfo("particle position: " + hitPos);
         }
 
         public static void Update()
         {
-            if (Input.GetKeyDown(KeyCode.F2))
-            {
-                var transform = PlayerCharacterMasterController.instances[0].master.GetBodyObject().transform;
+            //if (Input.GetKeyDown(KeyCode.F2))
+            //{
+            //    var transform = PlayerCharacterMasterController.instances[0].master.GetBodyObject().transform;
 
-                PickupDropletController.CreatePickupDroplet(PickupCatalog.FindPickupIndex(StinkyBomb.itemIndex), transform.position, transform.forward * 20f);
-            }
+            //    PickupDropletController.CreatePickupDroplet(PickupCatalog.FindPickupIndex(StinkyBomb.itemIndex), transform.position, transform.forward * 20f);
+            //}
         }
 
     }

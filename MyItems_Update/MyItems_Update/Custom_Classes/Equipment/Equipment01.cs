@@ -143,7 +143,6 @@ namespace MyItems_Update.Custom_Classes.Equipment
             var rotation = Quaternion.AngleAxis(totalDegrees / numberOfObjects, Vector3.up);
             //rotate the playerForward vector
 
-            LogInfo($"{position}");
             for (int i = 0; i < numberOfObjects; i++)
             {
                 //multiply the current playerForward variable by the rotation, returning a vector rotated by the amount above
@@ -157,14 +156,12 @@ namespace MyItems_Update.Custom_Classes.Equipment
                 if (Physics.Raycast(ray, out hit, raycastDistance + 3, LayerIndex.world.mask))
                 {
                     didHit = true;
-                    LogInfo("WORLD HIT");
                 }
                 if (didHit == false)
                 {
                     if (Physics.Raycast(ray, out hit, raycastDistance + 3, LayerIndex.debris.mask))
                     {
                         didHit = true;
-                        LogInfo("DEBRIS HIT");
                     }
                 }
                 if (didHit == true)
@@ -172,7 +169,6 @@ namespace MyItems_Update.Custom_Classes.Equipment
                     collision = hit.point;
                     fireProjectileInfo.position = collision;
                     ProjectileManager.instance.FireProjectile(fireProjectileInfo);
-                    LogInfo("FIST SPAWNED");
                 }
             }
         }
@@ -183,8 +179,6 @@ namespace MyItems_Update.Custom_Classes.Equipment
             {
                 var transform = PlayerCharacterMasterController.instances[0].master.GetBodyObject().transform;
 
-                LogInfo($"itemname: {EquipItemDef.nameToken}");
-                LogInfo($"item index: {PickupCatalog.FindPickupIndex(EquipItemDef.equipmentIndex)}");
                 PickupDropletController.CreatePickupDroplet(PickupCatalog.FindPickupIndex(EquipItemDef.equipmentIndex), transform.position, transform.forward * 20f);
             }
         }

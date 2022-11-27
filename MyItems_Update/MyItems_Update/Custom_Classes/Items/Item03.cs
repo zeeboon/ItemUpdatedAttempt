@@ -36,8 +36,6 @@ namespace MyItems_Update.Custom_Classes.Items
 
         private readonly float HealPercentage = 12f;
         private readonly float HealStackPercentage = 12f;
-        //private bool IsFullHealth = false;
-        //private float EnemyHealth = 0f;
 
         public override void CreateConfig(ConfigFile config)
         {
@@ -82,8 +80,6 @@ namespace MyItems_Update.Custom_Classes.Items
             CreateLang();
             CreateItem(KillHeal);
             Hooks();
-            //pickupName = ItemName;
-
         }
 
         //////////////////////////----------------------------------------------------------------------------
@@ -92,39 +88,6 @@ namespace MyItems_Update.Custom_Classes.Items
 
         private void HealthComponent_takeDamage(On.RoR2.HealthComponent.orig_TakeDamage orig, HealthComponent self, DamageInfo damageInfo)
         {
-            /*
-            if (damageInfo != null && self != null && damageInfo.attacker.GetComponent<CharacterBody>().inventory)
-            {
-                int itemCount = damageInfo.attacker.GetComponent<CharacterBody>().inventory.GetItemCount(KillHeal);
-
-                if (itemCount > 0)
-                {
-                    CharacterBody victimBody = self ? self.GetComponent<CharacterBody>() : null;
-
-                    float fullHealth = victimBody.healthComponent.fullCombinedHealth;
-                    float currentHealth = victimBody.healthComponent.combinedHealth;
-
-                    LogInfo($"{fullHealth}");
-                    LogInfo($"{currentHealth}");
-
-
-                    if (fullHealth == currentHealth)
-                    {
-                        IsFullHealth = true;
-                        LogInfo("IS FULL HEALTH");
-                        EnemyHealth = fullHealth;
-                    }
-                    else
-                    {
-                        IsFullHealth = false;
-                        LogInfo("IS NOT FULL HEALTH");
-                    }
-                }
-                
-
-            }
-            */
-
 
             int itemCount = 0;
             float currentHealth = 0f;
@@ -142,7 +105,6 @@ namespace MyItems_Update.Custom_Classes.Items
                         {
                             CharacterBody victimBody = self ? self.GetComponent<CharacterBody>() : null;
                             currentHealth = victimBody.healthComponent.combinedHealth;
-                            LogInfo($"KILL HEAL");
                             killHeal = true;
                         }
                     }
@@ -159,45 +121,22 @@ namespace MyItems_Update.Custom_Classes.Items
                 float healAmount = (currentHealth / 100f) * (HealPercentage + (HealStackPercentage * itemCount));
 
                 damageInfo.attacker.GetComponent<CharacterBody>().healthComponent.Heal(healAmount, procChainMask, true);
-                LogInfo($"HEALED FOR {healAmount}");
                 killHeal = false;
             }
 
-                /*
-                if (IsFullHealth)
-                {
-                    int itemCount = damageInfo.attacker.GetComponent<CharacterBody>().inventory.GetItemCount(KillHeal);
-                    if (self.GetComponent<CharacterBody>().healthComponent.combinedHealth <= 0 && itemCount > 0)
-                    {
-
-                        LogInfo("INSTAKILL");
-
-                        ProcChainMask procChainMask = damageInfo.procChainMask;
-                        float healAmount = (EnemyHealth / 100f) * (HealPercentage + (HealStackPercentage * itemCount));
-
-                        damageInfo.attacker.GetComponent<CharacterBody>().healthComponent.Heal(healAmount, procChainMask, true);
-                        LogInfo($"HEALED FOR {healAmount}");
-
-                    }
-                    else
-                    {
-                        LogInfo("NOT INSTAKILL");
-                    }
-                    IsFullHealth = false;
-                }*/
-            }
+        }
 
         public static void Update()
         {
-            if (Input.GetKeyDown(KeyCode.F4))
-            {
+            //if (Input.GetKeyDown(KeyCode.F4))
+            //{
 
-                var transform = PlayerCharacterMasterController.instances[0].master.GetBodyObject().transform;
+            //    var transform = PlayerCharacterMasterController.instances[0].master.GetBodyObject().transform;
 
-                //LogInfo(PickupCatalog.FindPickupIndex(iceDeathItem.itemIndex));
-                PickupDropletController.CreatePickupDroplet(PickupCatalog.FindPickupIndex(KillHeal.itemIndex), transform.position, transform.forward * 20f);
+            //    //LogInfo(PickupCatalog.FindPickupIndex(iceDeathItem.itemIndex));
+            //    PickupDropletController.CreatePickupDroplet(PickupCatalog.FindPickupIndex(KillHeal.itemIndex), transform.position, transform.forward * 20f);
 
-            }
+            //}
         }
     }
 }

@@ -86,8 +86,6 @@ namespace MyItems_Update.Custom_Classes.Items
 
         public static void SetupAttributes()
         {
-
-            //Item.SetupAttributes();
             DeathItemBuff = ScriptableObject.CreateInstance<BuffDef>();
             DeathItemBuff.buffColor = Color.red;
             DeathItemBuff.canStack = false;
@@ -106,7 +104,6 @@ namespace MyItems_Update.Custom_Classes.Items
             SetupAttributes();
             CreateItem(DeathItem);
             Hooks();
-            //pickupName = ItemName;
         }
 
         //////////////////////////----------------------------------------------------------------------------
@@ -124,8 +121,6 @@ namespace MyItems_Update.Custom_Classes.Items
                     args.critAdd += CritChance + (CritStack * (itemCount-1));
                     args.moveSpeedMultAdd += MoveSpeed;
                     args.attackSpeedMultAdd += AttackSpeed;
-
-                    LogInfo("HAS BUFF");
                 }
             }
         }
@@ -155,6 +150,7 @@ namespace MyItems_Update.Custom_Classes.Items
         }
         */
         // maybe change to RecalculateStats if I want to have buff active as long as you're under the threshold, instead of only timed
+
         private void HealthComponent_TakeDamage(On.RoR2.HealthComponent.orig_TakeDamage orig, HealthComponent self, DamageInfo damageInfo)
         {
             orig(self, damageInfo);
@@ -173,13 +169,13 @@ namespace MyItems_Update.Custom_Classes.Items
 
         public static void Update()
         {
-            if (Input.GetKeyDown(KeyCode.F5))
-            {
-                var transform = PlayerCharacterMasterController.instances[0].master.GetBodyObject().transform;
+            //if (Input.GetKeyDown(KeyCode.F5))
+            //{
+            //    var transform = PlayerCharacterMasterController.instances[0].master.GetBodyObject().transform;
 
-                //LogInfo(PickupCatalog.FindPickupIndex(iceDeathItem.itemIndex));
-                PickupDropletController.CreatePickupDroplet(PickupCatalog.FindPickupIndex(DeathItem.itemIndex), transform.position, transform.forward * 20f);
-            }
+            //    //LogInfo(PickupCatalog.FindPickupIndex(iceDeathItem.itemIndex));
+            //    PickupDropletController.CreatePickupDroplet(PickupCatalog.FindPickupIndex(DeathItem.itemIndex), transform.position, transform.forward * 20f);
+            //}
         }
 
     }

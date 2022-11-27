@@ -72,8 +72,6 @@ namespace MyItems_Update.Base_Classes
             else
             {
                 equipDef.pickupModelPrefab = Main.Assets.LoadAsset<GameObject>(EquipmentModelPath);
-                //string prefab = "Assets/ItemTests/Models/prefabs/Item/item1/Item_1.prefab";
-
             }
             if (EquipmentIconPath == "")
             {
