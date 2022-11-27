@@ -1,11 +1,11 @@
 ﻿using BepInEx.Configuration;
 using R2API;
 using RoR2;
-using MyItems_Update.Utils;
+using ZeebsZitems.Utils;
 using UnityEngine;
-using static MyItems_Update.Utils.Log;
+using static ZeebsZitems.Utils.Log;
 
-namespace MyItems_Update.Base_Classes
+namespace ZeebsZitems.Base_Classes
 {
     public abstract class EquipmentBase
     {

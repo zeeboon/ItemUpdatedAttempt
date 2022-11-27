@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace MyItems_Update.Utils
+namespace ZeebsZitems.Utils
 {
     public static class ArrayHelper
     {

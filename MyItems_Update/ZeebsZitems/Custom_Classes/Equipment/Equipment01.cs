@@ -2,15 +2,15 @@
 using R2API;
 using RoR2;
 using RoR2.Projectile;
-using MyItems_Update.Base_Classes;
+using ZeebsZitems.Base_Classes;
 using System;
 using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
-using static MyItems_Update.Utils.ItemHelper;
-using static MyItems_Update.Utils.Log;
+using static ZeebsZitems.Utils.ItemHelper;
+using static ZeebsZitems.Utils.Log;
 
-namespace MyItems_Update.Custom_Classes.Equipment
+namespace ZeebsZitems.Custom_Classes.Equipment
 {
     class Equipment01 : EquipmentBase
     {  

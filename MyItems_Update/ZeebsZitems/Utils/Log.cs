@@ -4,7 +4,7 @@ using System.Text;
 using BepInEx.Logging;
 
 
-namespace MyItems_Update.Utils
+namespace ZeebsZitems.Utils
 {
     internal static class Log
     {

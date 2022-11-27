@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31424.327
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyItems_Update", "MyItems_Update\MyItems_Update.csproj", "{04AEAFFF-53A7-43B6-AC6E-A056BF0A2472}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ZeebsZitems", "ZeebsZitems\ZeebsZitems.csproj", "{04AEAFFF-53A7-43B6-AC6E-A056BF0A2472}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

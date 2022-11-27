@@ -1,7 +1,7 @@
 ﻿using RoR2;
 using UnityEngine;
 
-namespace MyItems_Update.Utils
+namespace ZeebsZitems.Utils
 {
     //this class handles the renderer info for the items
     class ItemHelper

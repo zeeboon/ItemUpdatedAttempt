@@ -6,7 +6,7 @@ using System;
 using System.Reflection;
 using UnityEngine;
 
-namespace MyItems_Update.Base_Classes
+namespace ZeebsZitems.Base_Classes
 {
     //creates the class and has it inherit the BaseAchievement from the base game and IModdedUnlockableDataProvider for use in adding the achievement via UnlockableAPI
     public abstract class AchievementBase : BaseAchievement, IModdedUnlockableDataProvider

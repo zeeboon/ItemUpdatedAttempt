@@ -2,20 +2,20 @@
 using BepInEx.Configuration;
 using R2API;
 using R2API.Utils;
-using MyItems_Update.Base_Classes;
+using ZeebsZitems.Base_Classes;
 using System;
 using System.Reflection;
 using UnityEngine;
 using RoR2;
-using MyItems_Update.Utils;
-using static MyItems_Update.Utils.Log;
+using ZeebsZitems.Utils;
+using static ZeebsZitems.Utils.Log;
 using System.IO;
 using SearchableAttribute = HG.Reflection.SearchableAttribute;
 
 
 
 //automatically renamed based on project name.
-namespace MyItems_Update
+namespace ZeebsZitems
 {
     //--------------R2API dependency. This template is heavily based on the modules provided by this API, so it uses it as a dependency.--------------------
     [BepInDependency(R2API.R2API.PluginGUID, R2API.R2API.PluginVersion)]
@@ -36,13 +36,13 @@ namespace MyItems_Update
     {
 
         //define mod ID: uses the format of "com.USERNAME.MODNAME"
-        public const string ModGUID = "com.Zeeboon.itemTest";
+        public const string ModGUID = "com.Zeeboon.ZeebsZitems";
 
         //define the mod name inside quotes. Can be anything.
-        public const string ModName = "my items";
+        public const string ModName = "Zeeb's Zitems";
 
         //define mod version inside quotes. Follows format of "MAJORVERSION.MINORPATCH.BUGFIX". Ex: 1.2.3 is Major Release 1, Patch 2, Bug Fix 3.
-        public const string ModVersion = "0.0.1";
+        public const string ModVersion = "1.0.0";
 
         //Creates an asset bundle that can be easily accessed from other classes
         public static AssetBundle Assets = null;
