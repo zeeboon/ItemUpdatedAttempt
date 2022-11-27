@@ -169,13 +169,13 @@ namespace ZeebsZitems.Custom_Classes.Items
 
         public static void Update()
         {
-            //if (Input.GetKeyDown(KeyCode.F5))
-            //{
-            //    var transform = PlayerCharacterMasterController.instances[0].master.GetBodyObject().transform;
+            if (Input.GetKeyDown(KeyCode.F5))
+            {
+                var transform = PlayerCharacterMasterController.instances[0].master.GetBodyObject().transform;
 
-            //    //LogInfo(PickupCatalog.FindPickupIndex(iceDeathItem.itemIndex));
-            //    PickupDropletController.CreatePickupDroplet(PickupCatalog.FindPickupIndex(DeathItem.itemIndex), transform.position, transform.forward * 20f);
-            //}
+                //LogInfo(PickupCatalog.FindPickupIndex(iceDeathItem.itemIndex));
+                PickupDropletController.CreatePickupDroplet(PickupCatalog.FindPickupIndex(DeathItem.itemIndex), transform.position, transform.forward * 20f);
+            }
         }
 
     }

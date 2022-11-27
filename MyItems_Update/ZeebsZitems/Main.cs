@@ -168,7 +168,7 @@ namespace ZeebsZitems
 
         private void Update()
         {
-            
+
             //Custom_Classes.Equipment.Equipment01.Update();
             //Custom_Classes.Items.Item01.Update();
             //Custom_Classes.Items.Item02.Update();

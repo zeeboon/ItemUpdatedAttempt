@@ -31,7 +31,6 @@ namespace ZeebsZitems.Custom_Classes.Equipment
 
         public static EquipmentDef EquipItemDef = ScriptableObject.CreateInstance<EquipmentDef>();
 
-        //private string FistModelPath = "Prefabs/Effects/TitanFistEffect";
         private string FistModelPath = "prefabs/projectiles/TitanPreFistProjectile";
 
         public GameObject FistProjectilePrefab;
@@ -71,15 +70,11 @@ namespace ZeebsZitems.Custom_Classes.Equipment
             CreateLang();
             FistProjectilePrefab = Resources.Load<GameObject>(FistModelPath);
             CreateEquipment(EquipItemDef);
-            //AddToDroplist();
-            //pickupIndex = cooldownItem.itemIndex;
             Hooks();
         }
 
         protected override bool ActivateEquipment(EquipmentSlot slot)
         {
-            //LogInfo("ACTIVATE EQUIP");
-            
             CharacterBody player = slot.characterBody;
             var transform = player.transform;
 
@@ -104,37 +99,6 @@ namespace ZeebsZitems.Custom_Classes.Equipment
             float raycastDistance = 11f;
             Vector3 collision;
             RaycastHit hit;
-
-            /*
-            for (int i = 0; i < num; i++)
-            {
-                float radians = 2 * Mathf.PI / num * i;
-                float xAxis = Mathf.Sin(radians);
-                float zAxis = Mathf.Cos(radians);
-                Vector3 spawnDir = new Vector3(xAxis, 0, zAxis);
-                Vector3 spawnPos = position + spawnDir * spacing;
-                spawnPos.y += raycastDistance / 2;
-
-                bool didHit = false;
-                var ray = new Ray(spawnPos, Vector3.down);
-                if (Physics.Raycast(ray, out hit, raycastDistance + 3, LayerIndex.world.mask))
-                {
-                    didHit = true;
-                }
-                if (didHit == false)
-                {
-                    if (Physics.Raycast(ray, out hit, raycastDistance + 3, LayerIndex.debris.mask))
-                    {
-                        didHit = true;
-                    }
-                }
-                if (didHit == true)
-                {
-                    collision = hit.point;
-                    fireProjectileInfo.position = collision;
-                    ProjectileManager.instance.FireProjectile(fireProjectileInfo);
-                }
-            }*/
 
             var numberOfObjects = 8;
             var totalDegrees = 360f;
@@ -182,33 +146,6 @@ namespace ZeebsZitems.Custom_Classes.Equipment
                 PickupDropletController.CreatePickupDroplet(PickupCatalog.FindPickupIndex(EquipItemDef.equipmentIndex), transform.position, transform.forward * 20f);
             }
         }
-        
-        //private void AddToDroplist()
-        //{
-            
-        //    CharacterBody droppingBodyBodyComponent = Resources.Load<GameObject>("Prefabs/CharacterBodies/TitanBody").GetComponent<CharacterBody>();
-
-        //    GameObject gameObject = droppingBodyBodyComponent.gameObject;
-        //    //gameObject.bos
-        //    DeathRewards component = gameObject.GetComponent<DeathRewards>();
-        //    PickupIndex pickupIndex = (PickupIndex)component.bossPickup;
-        //    if (component)
-        //    {
-
-        //        if (component.bossPickup.pickupName == string.Empty)
-        //        {
-
-        //        }
-        //        pickupIndex = PickupCatalog.FindPickupIndex(EquipItemDef.equipmentIndex);
-        //        PickupDef pickupDef = PickupCatalog.GetPickupDef(pickupIndex);
-        //        if (pickupDef != null)
-        //        {
-        //            component.bossPickup.pickupName = pickupDef.internalName;
-        //        }
-
-        //    }
-        //    //RoR2.BossGroup.bos
-        //}
         
     }
 }

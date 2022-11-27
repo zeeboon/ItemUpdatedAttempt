@@ -196,15 +196,15 @@ namespace ZeebsZitems.Custom_Classes.Items
 
         public static void Update()
         {
-            //if (Input.GetKeyDown(KeyCode.F3))
-            //{
-                	
-            //    var transform = PlayerCharacterMasterController.instances[0].master.GetBodyObject().transform;
+            if (Input.GetKeyDown(KeyCode.F3))
+            {
 
-            //    //LogInfo(PickupCatalog.FindPickupIndex(iceDeathItem.itemIndex));
-            //    PickupDropletController.CreatePickupDroplet(PickupCatalog.FindPickupIndex(iceDeathItem.itemIndex), transform.position, transform.forward * 20f);
-                
-            //}
+                var transform = PlayerCharacterMasterController.instances[0].master.GetBodyObject().transform;
+
+                //LogInfo(PickupCatalog.FindPickupIndex(iceDeathItem.itemIndex));
+                PickupDropletController.CreatePickupDroplet(PickupCatalog.FindPickupIndex(iceDeathItem.itemIndex), transform.position, transform.forward * 20f);
+
+            }
         }
     }
 }

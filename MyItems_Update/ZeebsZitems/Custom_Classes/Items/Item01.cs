@@ -126,6 +126,7 @@ namespace ZeebsZitems.Custom_Classes.Items
             };
             StinkEffectPrefab2.GetComponent<EffectComponent>().applyScale = true;
             StinkEffectPrefab2.AddComponent<VFXAttributes>();
+            StinkEffectPrefab2.GetComponent<VFXAttributes>().vfxPriority = VFXAttributes.VFXPriority.Medium;
             ContentAddition.AddEffect(StinkEffectPrefab2);
 
             CreateLang();
@@ -215,12 +216,12 @@ namespace ZeebsZitems.Custom_Classes.Items
 
         public static void Update()
         {
-            //if (Input.GetKeyDown(KeyCode.F2))
-            //{
-            //    var transform = PlayerCharacterMasterController.instances[0].master.GetBodyObject().transform;
+            if (Input.GetKeyDown(KeyCode.F2))
+            {
+                var transform = PlayerCharacterMasterController.instances[0].master.GetBodyObject().transform;
 
-            //    PickupDropletController.CreatePickupDroplet(PickupCatalog.FindPickupIndex(StinkyBomb.itemIndex), transform.position, transform.forward * 20f);
-            //}
+                PickupDropletController.CreatePickupDroplet(PickupCatalog.FindPickupIndex(StinkyBomb.itemIndex), transform.position, transform.forward * 20f);
+            }
         }
 
     }
