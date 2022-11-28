@@ -150,19 +150,19 @@ namespace ZeebsZitems
         }
 
         //this method will instantiate our achievements based on a generated config option
-        public void VerifyAchievements(AchievementBase achievement)
-        {
+        //public void VerifyAchievements(AchievementBase achievement)
+        //{
 
-            var isEnabled = Config.Bind<bool>("Items", "enable" + achievement.AchievementNameToken, true, "Enable this achievement in game? Default: true").Value;
+        //    var isEnabled = Config.Bind<bool>("Items", "enable" + achievement.AchievementNameToken, true, "Enable this achievement in game? Default: true").Value;
 
-            if (isEnabled)
-            {
+        //    if (isEnabled)
+        //    {
 
-                achievement.Init(base.Config);
+        //        achievement.Init(base.Config);
 
-            }
+        //    }
 
-        }
+        //}
 
         //place other necessary methods below
 

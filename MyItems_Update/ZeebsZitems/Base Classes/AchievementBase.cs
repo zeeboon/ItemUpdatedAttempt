@@ -1,12 +1,13 @@
-﻿using BepInEx.Configuration;
-using R2API;
-using RoR2;
-using RoR2.Achievements;
-using System;
-using System.Reflection;
-using UnityEngine;
+﻿
+//using BepInEx.Configuration;
+//using R2API;
+//using RoR2;
+//using RoR2.Achievements;
+//using System;
+//using System.Reflection;
+//using UnityEngine;
 
-namespace ZeebsZitems.Base_Classes
+/*namespace ZeebsZitems.Base_Classes
 {
     //creates the class and has it inherit the BaseAchievement from the base game and IModdedUnlockableDataProvider for use in adding the achievement via UnlockableAPI
     public abstract class AchievementBase : BaseAchievement, IModdedUnlockableDataProvider
@@ -83,3 +84,4 @@ namespace ZeebsZitems.Base_Classes
         #endregion
     }
 }
+*/

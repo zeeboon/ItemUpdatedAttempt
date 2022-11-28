@@ -128,7 +128,7 @@ namespace ZeebsZitems.Custom_Classes.Items
 
         public static void Update()
         {
-            if (Input.GetKeyDown(KeyCode.F4))
+            if (Input.GetKeyDown(KeyCode.F4))   //drop pickup 4 testing, disable on release
             {
 
                 var transform = PlayerCharacterMasterController.instances[0].master.GetBodyObject().transform;

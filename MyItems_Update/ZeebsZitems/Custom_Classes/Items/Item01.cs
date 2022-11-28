@@ -42,8 +42,7 @@ namespace ZeebsZitems.Custom_Classes.Items
         public static DotController.DotIndex StinkDot { get; private set; }
 
         public GameObject StinkProjectilePrefab;
-        public GameObject StinkEffectPrefab1;
-        public GameObject StinkEffectPrefab2;
+        public GameObject StinkEffectPrefab;
         private EffectData StinkEffect;
 
         public static float ProcChance = 10f; 
@@ -118,16 +117,16 @@ namespace ZeebsZitems.Custom_Classes.Items
             StinkProjectilePrefab = Addressables.LoadAssetAsync<GameObject>(key: "RoR2/Base/MiniMushroom/SporeGrenadeProjectileDotZone.prefab").WaitForCompletion();
             StinkProjectilePrefab.GetComponent<ProjectileController>().procCoefficient = 0f;
 
-            StinkEffectPrefab2 = Main.Assets.LoadAsset<GameObject>("Assets/ItemTests/Models/Prefabs/VFX/stinkPoof.prefab");
-            StinkEffectPrefab2.AddComponent<EffectComponent>();
+            StinkEffectPrefab = Main.Assets.LoadAsset<GameObject>("Assets/ItemTests/Models/Prefabs/VFX/stinkPoof.prefab");
+            StinkEffectPrefab.AddComponent<EffectComponent>();
             StinkEffect = new EffectData
             {
                 scale = (StinkRadius * 0.6f)
             };
-            StinkEffectPrefab2.GetComponent<EffectComponent>().applyScale = true;
-            StinkEffectPrefab2.AddComponent<VFXAttributes>();
-            StinkEffectPrefab2.GetComponent<VFXAttributes>().vfxPriority = VFXAttributes.VFXPriority.Medium;
-            ContentAddition.AddEffect(StinkEffectPrefab2);
+            StinkEffectPrefab.GetComponent<EffectComponent>().applyScale = true;
+            StinkEffectPrefab.AddComponent<VFXAttributes>();
+            StinkEffectPrefab.GetComponent<VFXAttributes>().vfxPriority = VFXAttributes.VFXPriority.Medium;
+            ContentAddition.AddEffect(StinkEffectPrefab);
 
             CreateLang();
             SetupAttributes();
@@ -177,7 +176,7 @@ namespace ZeebsZitems.Custom_Classes.Items
             Vector3 hitPos = damageInfo.position;
             SphereSearch sphereSearch = new SphereSearch();
             List<HurtBox> targets = new List<HurtBox>();
-
+            
             sphereSearch.origin = hitPos;
             sphereSearch.mask = LayerIndex.entityPrecise.mask;
             sphereSearch.radius = radius;
@@ -211,12 +210,12 @@ namespace ZeebsZitems.Custom_Classes.Items
 
             StinkEffect.origin = hitPos;
 
-            EffectManager.SpawnEffect(StinkEffectPrefab2, StinkEffect, true);
+            EffectManager.SpawnEffect(StinkEffectPrefab, StinkEffect, true);
         }
 
         public static void Update()
         {
-            if (Input.GetKeyDown(KeyCode.F2))
+            if (Input.GetKeyDown(KeyCode.F2))   //drop pickup 4 testing, disable on release
             {
                 var transform = PlayerCharacterMasterController.instances[0].master.GetBodyObject().transform;
 
