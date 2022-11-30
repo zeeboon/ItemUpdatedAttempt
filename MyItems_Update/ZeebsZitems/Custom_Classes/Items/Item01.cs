@@ -44,8 +44,9 @@ namespace ZeebsZitems.Custom_Classes.Items
         public GameObject StinkProjectilePrefab;
         public GameObject StinkEffectPrefab;
         private EffectData StinkEffect;
+        public static ConfigEntry<bool> alwaysShowFX { get; set; }
 
-        public static float ProcChance = 10f; 
+        public static float ProcChance = 100f; 
         public static float ProcStack = 10f;
         public static float StinkDamage = 1.7f;
         public static float StinkDamageStack = 1f;
@@ -55,7 +56,7 @@ namespace ZeebsZitems.Custom_Classes.Items
 
         public override void CreateConfig(ConfigFile config)
         {
-
+            //alwaysShowFX = config.Bind<bool>("Items", "Always show " + ItemName + " VFX", true, "Might not appear sometimes when multiple enemies and effects are flying around otherwise. \nSet to false if this ends up causing lag or FPS issues.");
         }
 
         public override ItemDisplayRuleDict CreateItemDisplayRules()
@@ -69,7 +70,7 @@ namespace ZeebsZitems.Custom_Classes.Items
             {
 
                 new RoR2.ItemDisplayRule
-               {
+                {
                     ruleType = ItemDisplayRuleType.ParentedPrefab,
                     followerPrefab = ItemBodyModelPrefab,
                     childName = "Chest",
@@ -111,7 +112,6 @@ namespace ZeebsZitems.Custom_Classes.Items
 
         public override void Init(ConfigFile config)
         {
-
             CreateConfig(config);
             //CreateItemDisplayRules();
             StinkProjectilePrefab = Addressables.LoadAssetAsync<GameObject>(key: "RoR2/Base/MiniMushroom/SporeGrenadeProjectileDotZone.prefab").WaitForCompletion();
@@ -125,14 +125,22 @@ namespace ZeebsZitems.Custom_Classes.Items
             };
             StinkEffectPrefab.GetComponent<EffectComponent>().applyScale = true;
             StinkEffectPrefab.AddComponent<VFXAttributes>();
+            /*if (alwaysShowFX.Value == true)
+            {
+                StinkEffectPrefab.GetComponent<VFXAttributes>().vfxPriority = VFXAttributes.VFXPriority.Always;
+            }
+            else
+            {
+                StinkEffectPrefab.GetComponent<VFXAttributes>().vfxPriority = VFXAttributes.VFXPriority.Medium;
+            }*/
             StinkEffectPrefab.GetComponent<VFXAttributes>().vfxPriority = VFXAttributes.VFXPriority.Medium;
+            StinkEffectPrefab.GetComponent<VFXAttributes>().vfxIntensity = VFXAttributes.VFXIntensity.Low;
             ContentAddition.AddEffect(StinkEffectPrefab);
 
             CreateLang();
             SetupAttributes();
             CreateItem(StinkyBomb);
             Hooks();
-            
         }
 
 
@@ -218,7 +226,6 @@ namespace ZeebsZitems.Custom_Classes.Items
             if (Input.GetKeyDown(KeyCode.F2))   //drop pickup 4 testing, disable on release
             {
                 var transform = PlayerCharacterMasterController.instances[0].master.GetBodyObject().transform;
-
                 PickupDropletController.CreatePickupDroplet(PickupCatalog.FindPickupIndex(StinkyBomb.itemIndex), transform.position, transform.forward * 20f);
             }
         }

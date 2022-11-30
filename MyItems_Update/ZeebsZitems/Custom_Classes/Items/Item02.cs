@@ -96,6 +96,8 @@ namespace ZeebsZitems.Custom_Classes.Items
             };
             SlowParticlePrefab.GetComponent<EffectComponent>().applyScale = true;
             SlowParticlePrefab.AddComponent<VFXAttributes>();
+            SlowParticlePrefab.GetComponent<VFXAttributes>().vfxPriority = VFXAttributes.VFXPriority.Low;
+            SlowParticlePrefab.GetComponent<VFXAttributes>().vfxIntensity = VFXAttributes.VFXIntensity.Low;
             ContentAddition.AddEffect(SlowParticlePrefab);
 
             CreateItem(iceDeathItem);

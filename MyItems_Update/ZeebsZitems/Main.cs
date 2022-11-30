@@ -119,17 +119,14 @@ namespace ZeebsZitems
         //this method will instantiate our items based on a generated config option
         public void VerifyItems(ItemBase item)
         {
-
             //generates a config file to turn the item on or off and get its value
-            var isEnabled = Config.Bind<bool>("Items", "enable " + item.ItemName, true, "Enable this item in game? Default: true").Value;
+            var isEnabled = Config.Bind<bool>("Items", "enable " + item.ItemName, true, "Enable this item in game?").Value;
 
             //checks to see if the config is enabled
             if (isEnabled)
             {
-
                 //if the item is activated, instantiates the item
                 item.Init(base.Config);
-
             }
         }
 
@@ -137,7 +134,7 @@ namespace ZeebsZitems
         {
 
             //generates a config file to turn the item on or off and get its value
-            var isEnabled = Config.Bind<bool>("Items", "enable " + equip.EquipmentName, true, "Enable this item in game? Default: true").Value;
+            var isEnabled = Config.Bind<bool>("Equipment", "enable " + equip.EquipmentName, true, "Enable this equipment in game?").Value;
 
             //checks to see if the config is enabled
             if (isEnabled)
@@ -145,36 +142,33 @@ namespace ZeebsZitems
 
                 //if the item is activated, instantiates the item
                 equip.Init(base.Config);
-
             }
         }
 
         //this method will instantiate our achievements based on a generated config option
-        //public void VerifyAchievements(AchievementBase achievement)
-        //{
+        /*public void VerifyAchievements(AchievementBase achievement)
+        {
 
-        //    var isEnabled = Config.Bind<bool>("Items", "enable" + achievement.AchievementNameToken, true, "Enable this achievement in game? Default: true").Value;
+            var isEnabled = Config.Bind<bool>("Items", "enable" + achievement.AchievementNameToken, true, "Enable this achievement in game? Default: true").Value;
 
-        //    if (isEnabled)
-        //    {
+            if (isEnabled)
+            {
 
-        //        achievement.Init(base.Config);
+                achievement.Init(base.Config);
 
-        //    }
+            }
 
-        //}
+        }*/
 
         //place other necessary methods below
 
         private void Update()
         {
-
             //Custom_Classes.Equipment.Equipment01.Update();
             //Custom_Classes.Items.Item01.Update();
             //Custom_Classes.Items.Item02.Update();
             //Custom_Classes.Items.Item03.Update();
             //Custom_Classes.Items.Item04.Update();
-
 
         }
 

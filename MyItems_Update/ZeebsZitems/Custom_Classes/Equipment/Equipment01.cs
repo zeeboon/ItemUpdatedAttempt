@@ -35,7 +35,7 @@ namespace ZeebsZitems.Custom_Classes.Equipment
 
         public GameObject FistProjectilePrefab;
         public float FistForce = 6000f;
-        public float FistDamageMult = 15f;
+        public float FistDamageMult = 20f;
         public float FistDelay = 0.5f;
 
         public override ItemDisplayRuleDict CreateItemDisplayRules()
