@@ -17,7 +17,7 @@ namespace ZeebsZitems.Custom_Classes.Items
 
         public override string ItemLangTokenName => "DOORHANDLE";
 
-        public override string ItemPickupDesc => "Falling below half health increases movement speed, attack speed and chance to crit";
+        public override string ItemPickupDesc => "Falling below half health increases movement speed, attack speed and chance to crit.";
 
         public override string ItemFullDescription => $"<style=cDeath>Taking damage below {HealthPercentage}% health</style> will <style=cIsUtility>increase your movement speed and" +
                                                         $"attack speed by {MoveSpeed * 100}%</style> and <style=cIsDamage> chance to crit by {CritChance}%</style> " +

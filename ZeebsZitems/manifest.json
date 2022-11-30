@@ -1,0 +1,10 @@
+{
+    "name": ZeebsZitems
+    "version_number": "1.0.0",
+    "website_url": "",
+    "description": "Adds 4 new items (1 white, 3 greens) and 1 equipment to the game. No unlocking necessary.",
+    "dependencies": [
+	"bbepis-BepInExPack-5.4.1905",
+    	"tristanmcpherson-R2API-4.4.1"
+    ]
+}
