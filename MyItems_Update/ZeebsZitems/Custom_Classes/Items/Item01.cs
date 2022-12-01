@@ -46,7 +46,7 @@ namespace ZeebsZitems.Custom_Classes.Items
         private EffectData StinkEffect;
         public static ConfigEntry<bool> alwaysShowFX { get; set; }
 
-        public static float ProcChance = 100f; 
+        public static float ProcChance = 10f; 
         public static float ProcStack = 10f;
         public static float StinkDamage = 1.7f;
         public static float StinkDamageStack = 1f;

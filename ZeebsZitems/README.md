@@ -19,9 +19,16 @@ If you notice something's screwy or think something is wildly unbalanced you can
 
 - Me, for actually finishing something for once
 
+- Bigrock, for giving me some ideas
+
 - The modding discord, for answering my dumbass questions
 
 ## Changelog
+
+`1.0.1`
+
+- Nevermind I lied.
+- Fixed 100% Stinky Bomb proc chance <_< no one saw that
 
 `1.0.0`
 
