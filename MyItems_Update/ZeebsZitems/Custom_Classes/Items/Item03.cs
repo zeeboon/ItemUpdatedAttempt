@@ -69,7 +69,7 @@ namespace ZeebsZitems.Custom_Classes.Items
 
         public override void Hooks()
         {
-            On.RoR2.HealthComponent.TakeDamage += HealthComponent_takeDamage;
+            On.RoR2.HealthComponent.TakeDamageProcess += HealthComponent_takeDamageProcess;
         }
 
         public override void Init(ConfigFile config)
@@ -86,7 +86,7 @@ namespace ZeebsZitems.Custom_Classes.Items
         //////////////////////////----------------------------------------------------------------------------
 
 
-        private void HealthComponent_takeDamage(On.RoR2.HealthComponent.orig_TakeDamage orig, HealthComponent self, DamageInfo damageInfo)
+        private void HealthComponent_takeDamageProcess(On.RoR2.HealthComponent.orig_TakeDamageProcess orig, HealthComponent self, DamageInfo damageInfo)
         {
 
             int itemCount = 0;

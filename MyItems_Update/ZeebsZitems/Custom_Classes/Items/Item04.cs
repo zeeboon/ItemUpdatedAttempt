@@ -78,7 +78,7 @@ namespace ZeebsZitems.Custom_Classes.Items
         public override void Hooks()
         {
             //On.RoR2.CharacterBody.RecalculateStats += CharacterBody_RecalculateStats;
-            On.RoR2.HealthComponent.TakeDamage += HealthComponent_TakeDamage;
+            On.RoR2.HealthComponent.TakeDamageProcess += HealthComponent_TakeDamageProcess;
 
             RecalculateStatsAPI.GetStatCoefficients += RecalcStats_GetStatCoefficients;
             
@@ -151,7 +151,7 @@ namespace ZeebsZitems.Custom_Classes.Items
         */
         // maybe change to RecalculateStats if I want to have buff active as long as you're under the threshold, instead of only timed
 
-        private void HealthComponent_TakeDamage(On.RoR2.HealthComponent.orig_TakeDamage orig, HealthComponent self, DamageInfo damageInfo)
+        private void HealthComponent_TakeDamageProcess(On.RoR2.HealthComponent.orig_TakeDamageProcess orig, HealthComponent self, DamageInfo damageInfo)
         {
             orig(self, damageInfo);
 

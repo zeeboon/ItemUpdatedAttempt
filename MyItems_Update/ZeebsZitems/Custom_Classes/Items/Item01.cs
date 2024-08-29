@@ -86,9 +86,8 @@ namespace ZeebsZitems.Custom_Classes.Items
 
         public override void Hooks()
         {
-            On.RoR2.GlobalEventManager.OnHitEnemy += GlobalEventManager_OnHitEnemy;
+            On.RoR2.GlobalEventManager.ProcessHitEnemy += GlobalEventManager_ProcessHitEnemy;
         }
-
 
         public static void SetupAttributes()
         {
@@ -147,11 +146,11 @@ namespace ZeebsZitems.Custom_Classes.Items
         //////////////////////////----------------------------------------------------------------------------
         //////////////////////////----------------------------------------------------------------------------
 
-        private void GlobalEventManager_OnHitEnemy(On.RoR2.GlobalEventManager.orig_OnHitEnemy orig, GlobalEventManager self, DamageInfo damageInfo, GameObject victim)
+        private void GlobalEventManager_ProcessHitEnemy(On.RoR2.GlobalEventManager.orig_ProcessHitEnemy orig, GlobalEventManager self, DamageInfo damageInfo, GameObject victim)
         {
             orig.Invoke(self, damageInfo, victim);
-            
-            if ( victim && damageInfo.attacker && damageInfo.procCoefficient > 0f)
+
+            if (victim && damageInfo.attacker && damageInfo.procCoefficient > 0f)
             {
 
                 CharacterBody characterBody;
@@ -161,7 +160,7 @@ namespace ZeebsZitems.Custom_Classes.Items
                 if (victim.TryGetComponent<CharacterBody>(out characterBody) && damageInfo.attacker.TryGetComponent<CharacterBody>(out characterBody2)
                     && victim.TryGetComponent<HealthComponent>(out healthComponent))
                 {
-                    
+
                     if (damageInfo.attacker.GetComponent<CharacterBody>().inventory)
                     {
                         CharacterBody victimBody = victim.GetComponent<CharacterBody>();
@@ -172,7 +171,7 @@ namespace ZeebsZitems.Custom_Classes.Items
                         {
                             SpawnStink(victimBody, attacker, damageInfo, StinkBombBuff, itemCount);
                         }
-                        
+
                     }
                 }
             }
@@ -184,7 +183,10 @@ namespace ZeebsZitems.Custom_Classes.Items
             Vector3 hitPos = damageInfo.position;
             SphereSearch sphereSearch = new SphereSearch();
             List<HurtBox> targets = new List<HurtBox>();
-            
+
+            LogWarning($"stink pos: {hitPos}");
+            LogWarning($"targets: {targets}");
+
             sphereSearch.origin = hitPos;
             sphereSearch.mask = LayerIndex.entityPrecise.mask;
             sphereSearch.radius = radius;
@@ -196,10 +198,12 @@ namespace ZeebsZitems.Custom_Classes.Items
 
             for (int i = 0; i < targets.Count; i++)
             {
+                LogWarning($"checking stink for target {i+1}!");
                 HurtBox hurtBox = targets[i];
                 HealthComponent healthComp = hurtBox.healthComponent;
                 if (healthComp != null && itemCount > 0)
                 {
+                    LogWarning($"has body!: {hurtBox.healthComponent.gameObject}");
                     float dmgValue = (1.7f + (itemCount - 1)) * damageInfo.damage;
                     InflictDotInfo inflictDotInfo = new InflictDotInfo
                     {
@@ -211,8 +215,13 @@ namespace ZeebsZitems.Custom_Classes.Items
                                                 * (1.7f + (itemCount - 1)),             //dmg coefficient 170% + 100% /stack
                         duration = StinkDuration
                     };
+                    LogWarning($"dotAttacker: {damageInfo.attacker}");
+                    LogWarning($"dotIndex: {StinkDot}");
+                    LogWarning($"durationDamageMultiplier: {inflictDotInfo.damageMultiplier}");
+                    LogWarning($"dotDuration: {inflictDotInfo.duration}");
 
                     DotController.InflictDot(ref inflictDotInfo);
+                    LogWarning($"get stanked on idiot!!!");
                 }
             }
 

@@ -25,6 +25,5 @@ namespace ZeebsZitems.Utils
 
             return renderInfos;
         }
-
     }
 }
