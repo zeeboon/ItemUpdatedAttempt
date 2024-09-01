@@ -5,12 +5,12 @@ It adds 4 new items and 1 equipment to the game.
 | What it look like  | What it do|
 | ------------- | ------------- |
 | | <p align="center">**ITEMS**</p> |
-| <img src="https://cdn.discordapp.com/attachments/590962267122827269/1047627863492403240/StinkyBombIcon_sm.png" width=100> | **Stinky Bomb (Temporarily disabled!!)**<br>Chance on hit to poison surrounding enemies. |
-| <img src="https://cdn.discordapp.com/attachments/590962267122827269/1047627863148462192/NitrogenIcon_sm.png" width=100> | **Liquid Nitrogen**<br>Killing an enemy slows surrounding enemies, with a chance to cause a freezing blast instead. |
-| <img src="https://cdn.discordapp.com/attachments/590962267122827269/1047627862787772556/DoorhandleIcon_sm.png" width=100> | **Death's Doorhandle**<br>Falling below half health increases movement speed, attack speed and chance to crit. |
-| <img src="https://cdn.discordapp.com/attachments/590962267122827269/1047627862468993034/ChungusIcon_sm.png" width=100> | **Champion Fungus**<br>Killing an enemy heals you for a percentage of the damage done. |
+| <img src="https://raw.githubusercontent.com/zeeboon/ItemUpdatedAttempt/SotS-Update/tex/Icons/StinkyBombIcon_sm.png?token=GHSAT0AAAAAACW323PM4T5XD53FVILQ2GNKZWURG6Q" width=100> | **Stinky Bomb (Temporarily disabled!!)**<br>Chance on hit to poison surrounding enemies. |
+| <img src="https://raw.githubusercontent.com/zeeboon/ItemUpdatedAttempt/SotS-Update/tex/Icons/NitrogenIcon_sm.png?token=GHSAT0AAAAAACW323PMMGO5P62GROULM2J6ZWURG6Q" width=100> | **Liquid Nitrogen**<br>Killing an enemy slows surrounding enemies, with a chance to cause a freezing blast instead. |
+| <img src="https://raw.githubusercontent.com/zeeboon/ItemUpdatedAttempt/SotS-Update/tex/Icons/DoorhandleIcon_sm.png?token=GHSAT0AAAAAACW323PNJ33WQE2CBSVRTVB6ZWURG5Q" width=100> | **Death's Doorhandle**<br>Falling below half health increases movement speed, attack speed and chance to crit. |
+| <img src="https://raw.githubusercontent.com/zeeboon/ItemUpdatedAttempt/SotS-Update/tex/Icons/ChungusIcon_sm.png?token=GHSAT0AAAAAACW323PMYQD72DGDFULYLDKAZWURGJA" width=100> | **Champion Fungus**<br>Killing an enemy heals you for a percentage of the damage done. |
 | | <p align="center">**EQUIPMENT**</p> |
-| <img src="https://cdn.discordapp.com/attachments/590962267122827269/1047627864213815378/StoneGauntletIcon_sm.png" width=100> | **Stone Gauntlet**<br>Unleash titanic wrath. |
+| <img src="https://raw.githubusercontent.com/zeeboon/ItemUpdatedAttempt/SotS-Update/tex/Icons/StoneGauntletIcon_sm.png?token=GHSAT0AAAAAACW323PMCSY3HJRR756XZ5DWZWURG6Q" width=100> | **Stone Gauntlet**<br>Unleash titanic wrath. |
 
 If you notice something's screwy or think something is wildly unbalanced you can let me know in the modding discord server.
 
