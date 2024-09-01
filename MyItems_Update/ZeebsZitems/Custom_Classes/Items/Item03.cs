@@ -34,8 +34,8 @@ namespace ZeebsZitems.Custom_Classes.Items
 
         public static ItemDef KillHeal = ScriptableObject.CreateInstance<ItemDef>();
 
-        private readonly float HealPercentage = 12f;
-        private readonly float HealStackPercentage = 12f;
+        private readonly float HealPercentage = 10f;
+        private readonly float HealStackPercentage = 10f;
 
         public override void CreateConfig(ConfigFile config)
         {

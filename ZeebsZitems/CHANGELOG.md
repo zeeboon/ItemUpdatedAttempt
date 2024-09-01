@@ -5,7 +5,7 @@ It adds 4 new items and 1 equipment to the game.
 | What it look like  | What it do|
 | ------------- | ------------- |
 | | <p align="center">**ITEMS**</p> |
-| <img src="https://cdn.discordapp.com/attachments/590962267122827269/1047627863492403240/StinkyBombIcon_sm.png" width=100> | **Stinky Bomb (Temporarily disabled!!)**<br>Chance on hit to poison surrounding enemies. |
+| <img src="https://cdn.discordapp.com/attachments/590962267122827269/1047627863492403240/StinkyBombIcon_sm.png" width=100> | **Stinky Bomb**<br>Chance on hit to poison surrounding enemies. |
 | <img src="https://cdn.discordapp.com/attachments/590962267122827269/1047627863148462192/NitrogenIcon_sm.png" width=100> | **Liquid Nitrogen**<br>Killing an enemy slows surrounding enemies, with a chance to cause a freezing blast instead. |
 | <img src="https://cdn.discordapp.com/attachments/590962267122827269/1047627862787772556/DoorhandleIcon_sm.png" width=100> | **Death's Doorhandle**<br>Falling below half health increases movement speed, attack speed and chance to crit. |
 | <img src="https://cdn.discordapp.com/attachments/590962267122827269/1047627862468993034/ChungusIcon_sm.png" width=100> | **Champion Fungus**<br>Killing an enemy heals you for a percentage of the damage done. |
@@ -24,12 +24,6 @@ If you notice something's screwy or think something is wildly unbalanced you can
 - The modding discord, for answering my dumbass questions
 
 ## Changelog
-
-`1.1.0`
-
-- Updated to work with Seekers of the Storm
-- Temporarily disabled Stinky Bomb because the SotS update broke DotAPI
-- Lowered Champion Fungus heal from 12% to 10%
 
 `1.0.1`
 
