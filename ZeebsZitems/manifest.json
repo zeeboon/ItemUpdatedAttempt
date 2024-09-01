@@ -1,10 +1,14 @@
 {
     "name": "ZeebsZitems",
-    "version_number": "1.0.1",
+    "version_number": "1.1.0",
     "website_url": "",
     "description": "Adds 4 new items (1 white, 3 greens) and 1 equipment to the game. No unlocking necessary.",
     "dependencies": [
-	"bbepis-BepInExPack-5.4.1905",
-    	"tristanmcpherson-R2API-4.4.1"
+	"bbepis-BepInExPack-5.4.2113",
+    	"RiskofThunder-R2API_Items-1.0.3",
+    	"RiskofThunder-R2API_Dot-1.0.2",
+    	"RiskofThunder-R2API_Language-1.0.1",
+    	"RiskofThunder-R2API_RecalculateStats-1.4.0",
+    	"RiskofThunder-R2API_ContentManagement-1.0.5",
     ]
 }
