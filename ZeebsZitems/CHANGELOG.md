@@ -1,4 +1,5 @@
-`1.1.0`
+`1.1.1`
+- Fixed icons`1.1.0`
 
 - Updated to work with Seekers of the Storm
 - Temporarily disabled Stinky Bomb because the SotS update broke DotAPI
