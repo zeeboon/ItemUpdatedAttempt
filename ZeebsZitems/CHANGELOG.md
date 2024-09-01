@@ -3,6 +3,7 @@
 - Updated to work with Seekers of the Storm
 - Temporarily disabled Stinky Bomb because the SotS update broke DotAPI
 - Lowered Champion Fungus heal from 12% to 10%
+- Clarified how Death's Doorhandle works a little bit
 - Split R2API dependencies into submodules
 
 `1.0.1`
