@@ -110,7 +110,7 @@ namespace ZeebsZitems
         public void Instantiate()
         {
             VerifyEquipment(new Custom_Classes.Equipment.Equipment01());
-            VerifyItems(new Custom_Classes.Items.Item01());
+            //VerifyItems(new Custom_Classes.Items.Item01());           // temp disable cuz dotAPI doesn't work
             VerifyItems(new Custom_Classes.Items.Item02());
             VerifyItems(new Custom_Classes.Items.Item03());
             VerifyItems(new Custom_Classes.Items.Item04());

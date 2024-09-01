@@ -196,6 +196,9 @@ namespace ZeebsZitems.Custom_Classes.Items
             sphereSearch.GetHurtBoxes(targets);
             sphereSearch.ClearCandidates();
 
+
+            //DotController.InflictDot(victimBody.gameObject, attackerBody.gameObject, DotController.DotIndex.Bleed, 3f, 1f);
+
             for (int i = 0; i < targets.Count; i++)
             {
                 LogWarning($"checking stink for target {i+1}!");
@@ -204,24 +207,37 @@ namespace ZeebsZitems.Custom_Classes.Items
                 if (healthComp != null && itemCount > 0)
                 {
                     LogWarning($"has body!: {hurtBox.healthComponent.gameObject}");
-                    float dmgValue = (1.7f + (itemCount - 1)) * damageInfo.damage;
-                    InflictDotInfo inflictDotInfo = new InflictDotInfo
-                    {
-                        victimObject = hurtBox.healthComponent.gameObject,
-                        attackerObject = damageInfo.attacker,
+                    //float dmgValue = (1.7f + (itemCount - 1)) * damageInfo.damage;
+                    //InflictDotInfo inflictDotInfo = new InflictDotInfo
+                    //{
+                    //    victimObject = hurtBox.healthComponent.gameObject,
+                    //    attackerObject = damageInfo.attacker,
                         
-                        dotIndex = StinkDot,
-                        damageMultiplier = (damageInfo.damage / attackerBody.damage)    //get total dmg
-                                                * (1.7f + (itemCount - 1)),             //dmg coefficient 170% + 100% /stack
-                        duration = StinkDuration
-                    };
-                    LogWarning($"dotAttacker: {damageInfo.attacker}");
-                    LogWarning($"dotIndex: {StinkDot}");
-                    LogWarning($"durationDamageMultiplier: {inflictDotInfo.damageMultiplier}");
-                    LogWarning($"dotDuration: {inflictDotInfo.duration}");
+                    //    dotIndex = StinkDot,
+                    //    damageMultiplier = (damageInfo.damage / attackerBody.damage)    //get total dmg
+                    //                            * (1.7f + (itemCount - 1)),             //dmg coefficient 170% + 100% /stack
+                    //    duration = StinkDuration
+                    //};
+                    //LogWarning($"dotAttacker: {damageInfo.attacker}");
+                    //LogWarning($"dotIndex: {StinkDot}");
+                    //LogWarning($"durationDamageMultiplier: {inflictDotInfo.damageMultiplier}");
+                    //LogWarning($"dotDuration: {inflictDotInfo.duration}");
 
-                    DotController.InflictDot(ref inflictDotInfo);
-                    LogWarning($"get stanked on idiot!!!");
+                    //DotController.InflictDot(ref inflictDotInfo);
+                    //LogWarning($"get stanked on idiot!!!");
+
+                    var damageMult = (damageInfo.damage / attackerBody.damage)      //get total dmg
+                                                * (1.7f + (itemCount - 1));         //dmg coefficient 170% + 100% /stack
+
+
+                    LogWarning($"Bleed Index: {DotController.DotIndex.Bleed}");
+                    LogWarning($"My Dot Index: {StinkDot}");
+                    LogWarning($"BuffDef: {StinkBombBuff}");
+
+                    DotController.InflictDot(hurtBox.healthComponent.gameObject, attackerBody.gameObject, StinkDot, damageMult, StinkDuration);
+
+
+                    //DotController.InflictDot(hurtBox.healthComponent.gameObject, attackerBody.gameObject, DotController.DotIndex.Poison, 5f, 1f);
                 }
             }
 
