@@ -25,6 +25,9 @@ If you notice something's screwy or think something is wildly unbalanced you can
 
 ## Changelog
 
+`1.1.2`
+- Removed item spawn shortcuts v_v 
+
 `1.1.1`
 - Fixed icons
 

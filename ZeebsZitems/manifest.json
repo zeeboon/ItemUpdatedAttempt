@@ -1,6 +1,6 @@
 {
     "name": "ZeebsZitems",
-    "version_number": "1.1.1",
+    "version_number": "1.1.2",
     "website_url": "",
     "description": "Adds 4 new items (1 white, 3 greens) and 1 equipment to the game. No unlocking necessary. (Stinky Bomb temporarily disabled until DotAPI is updated)",
     "dependencies": [
