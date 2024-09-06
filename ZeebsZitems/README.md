@@ -5,7 +5,7 @@ It adds 4 new items and 1 equipment to the game.
 | What it look like  | What it do|
 | ------------- | ------------- |
 | | <p align="center">**ITEMS**</p> |
-| <img src="https://raw.githubusercontent.com/zeeboon/ItemUpdatedAttempt/SotS-Update/tex/Icons/StinkyBombIcon_sm.png" width=100> | **Stinky Bomb (Temporarily disabled!!)**<br>Chance on hit to poison surrounding enemies. |
+| <img src="https://raw.githubusercontent.com/zeeboon/ItemUpdatedAttempt/SotS-Update/tex/Icons/StinkyBombIcon_sm.png" width=100> | **Stinky Bomb**<br>Chance on hit to poison surrounding enemies. |
 | <img src="https://raw.githubusercontent.com/zeeboon/ItemUpdatedAttempt/SotS-Update/tex/Icons/NitrogenIcon_sm.png" width=100> | **Liquid Nitrogen**<br>Killing an enemy slows surrounding enemies, with a chance to cause a freezing blast instead. |
 | <img src="https://raw.githubusercontent.com/zeeboon/ItemUpdatedAttempt/SotS-Update/tex/Icons/DoorhandleIcon_sm.png" width=100> | **Death's Doorhandle**<br>Falling below half health increases movement speed, attack speed and chance to crit. |
 | <img src="https://raw.githubusercontent.com/zeeboon/ItemUpdatedAttempt/SotS-Update/tex/Icons/ChungusIcon_sm.png" width=100> | **Champion Fungus**<br>Killing an enemy heals you for a percentage of the damage done. |
@@ -25,8 +25,15 @@ If you notice something's screwy or think something is wildly unbalanced you can
 
 ## Changelog
 
+`1.1.4`
+- Forgot to change readme so it doesn't say Stinky Bomb is disabled anymore -_- ffs I always forget something
+
+`1.1.3`
+- Enabled Stinky Bomb again (yay)
+- Increased Stinky Bomb damage a little bit (170% + 100 -> 180% + 110%), it was balanced around Sticky Bomb but honestly Sticky Bomb kinda sucks
+
 `1.1.2`
-- Removed item spawn shortcuts v_v 
+- Removed item spawn shortcuts v_v Sorry, you'll have to actually find the items normally now
 
 `1.1.1`
 - Fixed icons
