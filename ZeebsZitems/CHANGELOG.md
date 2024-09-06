@@ -1,5 +1,12 @@
+`1.1.4`
+- Forgot to change readme so it doesn't say Stinky Bomb is disabled anymore -_- ffs I always forget something
+
+`1.1.3`
+- Enabled Stinky Bomb again (yay)
+- Increased Stinky Bomb damage a little bit (170% + 100 -> 180% + 110%), it was balanced around Sticky Bomb but honestly Sticky Bomb kinda sucks
+
 `1.1.2`
-- Removed item spawn shortcuts v_v 
+- Removed item spawn shortcuts v_v Sorry, you'll have to actually find the items normally now
 
 `1.1.1`
 - Fixed icons
@@ -20,3 +27,4 @@
 `1.0.0`
 
 - Finished forever. :-)
+

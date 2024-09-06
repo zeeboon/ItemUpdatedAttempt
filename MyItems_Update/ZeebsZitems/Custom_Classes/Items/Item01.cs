@@ -48,8 +48,8 @@ namespace ZeebsZitems.Custom_Classes.Items
 
         public static float ProcChance = 10f; 
         public static float ProcStack = 10f;
-        public static float StinkDamage = 1.7f;
-        public static float StinkDamageStack = 1f;
+        public static float StinkDamage = 1.8f;
+        public static float StinkDamageStack = 1.1f;
         public static float StinkDuration = 4f;
         public static float StinkRadius = 10f;
 
@@ -184,9 +184,6 @@ namespace ZeebsZitems.Custom_Classes.Items
             SphereSearch sphereSearch = new SphereSearch();
             List<HurtBox> targets = new List<HurtBox>();
 
-            LogWarning($"stink pos: {hitPos}");
-            LogWarning($"targets: {targets}");
-
             sphereSearch.origin = hitPos;
             sphereSearch.mask = LayerIndex.entityPrecise.mask;
             sphereSearch.radius = radius;
@@ -196,48 +193,24 @@ namespace ZeebsZitems.Custom_Classes.Items
             sphereSearch.GetHurtBoxes(targets);
             sphereSearch.ClearCandidates();
 
-
-            //DotController.InflictDot(victimBody.gameObject, attackerBody.gameObject, DotController.DotIndex.Bleed, 3f, 1f);
-
             for (int i = 0; i < targets.Count; i++)
             {
-                LogWarning($"checking stink for target {i+1}!");
                 HurtBox hurtBox = targets[i];
                 HealthComponent healthComp = hurtBox.healthComponent;
                 if (healthComp != null && itemCount > 0)
                 {
-                    LogWarning($"has body!: {hurtBox.healthComponent.gameObject}");
-                    //float dmgValue = (1.7f + (itemCount - 1)) * damageInfo.damage;
-                    //InflictDotInfo inflictDotInfo = new InflictDotInfo
-                    //{
-                    //    victimObject = hurtBox.healthComponent.gameObject,
-                    //    attackerObject = damageInfo.attacker,
-                        
-                    //    dotIndex = StinkDot,
-                    //    damageMultiplier = (damageInfo.damage / attackerBody.damage)    //get total dmg
-                    //                            * (1.7f + (itemCount - 1)),             //dmg coefficient 170% + 100% /stack
-                    //    duration = StinkDuration
-                    //};
-                    //LogWarning($"dotAttacker: {damageInfo.attacker}");
-                    //LogWarning($"dotIndex: {StinkDot}");
-                    //LogWarning($"durationDamageMultiplier: {inflictDotInfo.damageMultiplier}");
-                    //LogWarning($"dotDuration: {inflictDotInfo.duration}");
+                    InflictDotInfo inflictDotInfo = new InflictDotInfo
+                    {
+                        victimObject = hurtBox.healthComponent.gameObject,
+                        attackerObject = damageInfo.attacker,
 
-                    //DotController.InflictDot(ref inflictDotInfo);
-                    //LogWarning($"get stanked on idiot!!!");
+                        dotIndex = StinkDot,
+                        damageMultiplier = (damageInfo.damage / attackerBody.damage)    //get total dmg
+                                                * (1.7f + (itemCount - 1)),             //dmg coefficient 170% + 100% /stack
+                        duration = StinkDuration
+                    };
 
-                    var damageMult = (damageInfo.damage / attackerBody.damage)      //get total dmg
-                                                * (1.7f + (itemCount - 1));         //dmg coefficient 170% + 100% /stack
-
-
-                    LogWarning($"Bleed Index: {DotController.DotIndex.Bleed}");
-                    LogWarning($"My Dot Index: {StinkDot}");
-                    LogWarning($"BuffDef: {StinkBombBuff}");
-
-                    DotController.InflictDot(hurtBox.healthComponent.gameObject, attackerBody.gameObject, StinkDot, damageMult, StinkDuration);
-
-
-                    //DotController.InflictDot(hurtBox.healthComponent.gameObject, attackerBody.gameObject, DotController.DotIndex.Poison, 5f, 1f);
+                    DotController.InflictDot(ref inflictDotInfo);
                 }
             }
 

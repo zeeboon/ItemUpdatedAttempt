@@ -42,7 +42,7 @@ namespace ZeebsZitems
         public const string ModName = "Zeeb's Zitems";
 
         //define mod version inside quotes. Follows format of "MAJORVERSION.MINORPATCH.BUGFIX". Ex: 1.2.3 is Major Release 1, Patch 2, Bug Fix 3.
-        public const string ModVersion = "1.1.2";
+        public const string ModVersion = "1.1.4";
 
         //Creates an asset bundle that can be easily accessed from other classes
         public static AssetBundle Assets = null;
@@ -110,7 +110,7 @@ namespace ZeebsZitems
         public void Instantiate()
         {
             VerifyEquipment(new Custom_Classes.Equipment.Equipment01());
-            //VerifyItems(new Custom_Classes.Items.Item01());           // temp disable cuz dotAPI doesn't work
+            VerifyItems(new Custom_Classes.Items.Item01());
             VerifyItems(new Custom_Classes.Items.Item02());
             VerifyItems(new Custom_Classes.Items.Item03());
             VerifyItems(new Custom_Classes.Items.Item04());
