@@ -12,8 +12,6 @@ using static ZeebsZitems.Utils.Log;
 using System.IO;
 using SearchableAttribute = HG.Reflection.SearchableAttribute;
 
-
-
 //automatically renamed based on project name.
 namespace ZeebsZitems
 {
@@ -42,15 +40,17 @@ namespace ZeebsZitems
         public const string ModName = "Zeeb's Zitems";
 
         //define mod version inside quotes. Follows format of "MAJORVERSION.MINORPATCH.BUGFIX". Ex: 1.2.3 is Major Release 1, Patch 2, Bug Fix 3.
-        public const string ModVersion = "1.1.4";
+        public const string ModVersion = "1.1.5";
 
         //Creates an asset bundle that can be easily accessed from other classes
         public static AssetBundle Assets = null;
-        //public static AssetBundleResourcesProvider Provider; 
-
+        //public static AssetBundleResourcesProvider Provider;
 
         //List other necessary variables and bits here. For example, you may need a list of all your new things to add them to the game properly.
         public static PluginInfo PInfo { get; private set; }
+
+        // DON'T FORGET TO SET TO FALSE ON RELEASE YOU DUMBFUCK !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! YES YOU IM LOOKING AT YOU !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        private bool Debug_ItemSpawn = false;
 
         //this method runs when your mod is loaded.
         public void Awake()
@@ -76,11 +76,8 @@ namespace ZeebsZitems
             string pluginfolder = System.IO.Path.GetDirectoryName(GetType().Assembly.Location);
             const string assetBundle = "mod_assets";
 
-
             string AssetBundlePath = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(Main.PInfo.Location), assetBundle);
             Assets = AssetBundle.LoadFromFile(AssetBundlePath);
-
-            
 
             //runs our configs
             Configs();
@@ -94,16 +91,12 @@ namespace ZeebsZitems
 
         public void Configs()
         {
-
             //insert configs here
-
         }
 
         public void Hooks()
         {
-
             //insert hooks here
-
         }
 
         //we make calls to Verify on each thing here to make our call in Awake clean
@@ -164,11 +157,14 @@ namespace ZeebsZitems
 
         private void Update()
         {
-            //Custom_Classes.Equipment.Equipment01.Update();
-            //Custom_Classes.Items.Item01.Update();
-            //Custom_Classes.Items.Item02.Update();
-            //Custom_Classes.Items.Item03.Update();
-            //Custom_Classes.Items.Item04.Update();
+            if (Debug_ItemSpawn == true)
+            {
+                Custom_Classes.Equipment.Equipment01.Update();
+                Custom_Classes.Items.Item01.Update();
+                Custom_Classes.Items.Item02.Update();
+                Custom_Classes.Items.Item03.Update();
+                Custom_Classes.Items.Item04.Update();
+            }
         }
     }
 }

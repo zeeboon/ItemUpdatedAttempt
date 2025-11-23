@@ -80,8 +80,8 @@ namespace ZeebsZitems.Custom_Classes.Items
             //On.RoR2.CharacterBody.RecalculateStats += CharacterBody_RecalculateStats;
             On.RoR2.HealthComponent.TakeDamageProcess += HealthComponent_TakeDamageProcess;
 
+            //RecalculateStatsAPI.GetStatCoefficients += RecalcStats_GetStatCoefficients;
             RecalculateStatsAPI.GetStatCoefficients += RecalcStats_GetStatCoefficients;
-            
         }
 
         public static void SetupAttributes()
