@@ -1,3 +1,9 @@
+`1.1.6`
+- AAAAGH forgot to change the changelog and readme again....
+
+`1.1.5`
+- Updated to work with Alloyed Collective
+
 `1.1.4`
 - Forgot to change readme so it doesn't say Stinky Bomb is disabled anymore -_- ffs I always forget something
 

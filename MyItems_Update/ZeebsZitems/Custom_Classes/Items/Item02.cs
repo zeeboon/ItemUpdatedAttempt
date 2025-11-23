@@ -200,7 +200,6 @@ namespace ZeebsZitems.Custom_Classes.Items
         {
             if (Input.GetKeyDown(KeyCode.F3))   //drop pickup 4 testing, disable on release
             {
-
                 var transform = PlayerCharacterMasterController.instances[0].master.GetBodyObject().transform;
 
                 //LogInfo(PickupCatalog.FindPickupIndex(iceDeathItem.itemIndex));
