@@ -40,7 +40,8 @@ namespace ZeebsZitems
         public const string ModName = "Zeeb's Zitems";
 
         //define mod version inside quotes. Follows format of "MAJORVERSION.MINORPATCH.BUGFIX". Ex: 1.2.3 is Major Release 1, Patch 2, Bug Fix 3.
-        public const string ModVersion = "1.1.5";
+        /* MAKE 1.1.7 NEXT TIME ACCIDENTALLY SKIPPED A NR */
+        public const string ModVersion = "1.1.5"/* MAKE 1.1.7 NEXT TIME ACCIDENTALLY SKIPPED A NR */;
 
         //Creates an asset bundle that can be easily accessed from other classes
         public static AssetBundle Assets = null;
